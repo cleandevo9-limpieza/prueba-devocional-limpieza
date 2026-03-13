@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ministerio de Limpieza</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background: linear-gradient(135deg,#0f3d73,#1f6fb2);
+padding:10px;
+margin:0;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.header{
+text-align:center;
+margin-bottom:10px;
+}
+
+.header h1{
+color:#1f4f82;
+margin:0;
+font-size:28px;
+}
+
+.header h2{
+color:#3c6ea8;
+font-weight:normal;
+margin-top:5px;
+font-size:18px;
+}
+
+/* VERSICULO MAS COMPACTO */
+
+.versiculo{
+background:#eef5ff;
+padding:8px 12px;
+border-left:5px solid #1f6fb2;
+border-radius:6px;
+margin-top:8px;
+font-style:italic;
+font-size:13px;
+color:#333;
+display:none;
+}
+
+.referencia{
+margin-top:4px;
+font-weight:bold;
+color:#1f4f82;
+font-size:12px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:10px;
+text-align:center;
+font-size:14px;
+vertical-align:top;
+}
+
+th{
+background:#1f6fb2;
+color:white;
+}
+
+td:first-child{
+font-weight:bold;
+background:#f0f6ff;
+}
+
+/* TEXTAREAS GRANDES */
+
+textarea{
+width:100%;
+padding:8px;
+border-radius:6px;
+border:1px solid #ccc;
+height:90px;
+resize:vertical;
+box-sizing:border-box;
+font-family:Arial;
+font-size:14px;
+}
+
+button{
+padding:14px 20px;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+width:48%;
+}
+
+.guardar{
+background:#3498db;
+color:white;
+}
+
+.guardar:hover{
+background:#2c80b4;
+}
+
+.enviar{
+background:#1f6fb2;
+color:white;
+}
+
+.enviar:hover{
+background:#184f82;
+}
+
+.login{
+text-align:center;
+padding:30px 10px;
+}
+
+.login input{
+padding:12px;
+font-size:16px;
+width:80%;
+max-width:250px;
+}
+
+.login button{
+background:#1f6fb2;
+color:white;
+margin-top:10px;
+width:auto;
+padding:12px 25px;
+}
+
+.botones{
+display:flex;
+justify-content:space-between;
+gap:10px;
+margin-top:20px;
+}
+
+.peticion{
+margin-top:20px;
+text-align:left;
+background:#f5f9ff;
+padding:15px;
+border-radius:8px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width:700px){
+
+th,td{
+font-size:12px;
+padding:6px;
+}
+
+.header h1{
+font-size:22px;
+}
+
+.header h2{
+font-size:16px;
+}
+
+button{
+font-size:15px;
+}
+
+textarea{
+height:100px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+<h1>Ministerio de Limpieza</h1>
+<h2>Registro Devocional Semanal</h2>
+
+<div id="versiculo" class="versiculo">
+“Porque Dios no es injusto para olvidar vuestra obra y el trabajo de amor que habéis mostrado hacia su nombre, habiendo servido a los santos y sirviéndoles aún.”
+<div class="referencia">
+Hebreos 6:10 — Reina-Valera 1960
+</div>
+</div>
+
+</div>
+
+<div id="login" class="login">
+
+<h3>Ingresar Usuario</h3>
+
+<input id="usuario" placeholder="Escribe tu usuario">
+
+<br>
+
+<button onclick="entrar()">Entrar</button>
+
+</div>
+
+<div id="app" style="display:none">
+
+<h3 id="titulo"></h3>
+
+<table>
+
+<tr>
+<th>Día</th>
+<th>Lectura</th>
+<th>Oración</th>
+<th>Lo que Dios me habló</th>
+</tr>
+
+<tbody id="tabla"></tbody>
+
+</table>
+
+<div class="peticion">
+
+<strong>Petición de oración</strong>
+
+<br><br>
+
+<textarea id="peticion" placeholder="Escribe aquí tu petición de oración"></textarea>
+
+</div>
+
+<div class="botones">
+
+<button class="guardar" onclick="guardar()">Guardar</button>
+
+<button class="enviar" onclick="enviar()">Enviar</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const dias=[
+"Lunes",
+"Martes",
+"Miércoles",
+"Jueves",
+"Viernes",
+"Sábado"
+];
+
+let usuario="";
+
+window.onload=function(){
+
+let usuarioGuardado=localStorage.getItem("usuario");
+
+if(usuarioGuardado){
+
+usuario=usuarioGuardado;
+
+document.getElementById("login").style.display="none";
+document.getElementById("app").style.display="block";
+
+document.getElementById("titulo").innerText="Usuario: "+usuario;
+
+document.getElementById("versiculo").style.display="block";
+
+crearTabla();
+
+setTimeout(cargarDatos,200);
+
+}
+
+}
+
+function entrar(){
+
+usuario=document.getElementById("usuario").value;
+
+if(usuario==""){
+alert("Escribe un usuario");
+return;
+}
+
+localStorage.setItem("usuario",usuario);
+
+document.getElementById("login").style.display="none";
+document.getElementById("app").style.display="block";
+
+document.getElementById("titulo").innerText="Usuario: "+usuario;
+
+document.getElementById("versiculo").style.display="block";
+
+crearTabla();
+
+}
+
+function crearTabla(){
+
+let html="";
+
+dias.forEach(d=>{
+
+html+=`
+<tr>
+
+<td>${d}</td>
+
+<td><textarea id="${d}-lectura"></textarea></td>
+
+<td><textarea id="${d}-oracion"></textarea></td>
+
+<td><textarea id="${d}-dios"></textarea></td>
+
+</tr>
+`;
+
+});
+
+document.getElementById("tabla").innerHTML=html;
+
+}
+
+function guardar(){
+
+let data={};
+
+dias.forEach(d=>{
+
+data[d]={
+
+lectura:document.getElementById(d+"-lectura").value,
+oracion:document.getElementById(d+"-oracion").value,
+dios:document.getElementById(d+"-dios").value
+
+}
+
+});
+
+data["peticion"]=document.getElementById("peticion").value;
+
+localStorage.setItem("datos",JSON.stringify(data));
+
+alert("Progreso guardado");
+
+}
+
+function cargarDatos(){
+
+let datos=JSON.parse(localStorage.getItem("datos"));
+
+if(!datos) return;
+
+dias.forEach(d=>{
+
+if(datos[d]){
+
+document.getElementById(d+"-lectura").value=datos[d].lectura || "";
+document.getElementById(d+"-oracion").value=datos[d].oracion || "";
+document.getElementById(d+"-dios").value=datos[d].dios || "";
+
+}
+
+});
+
+document.getElementById("peticion").value=datos["peticion"] || "";
+
+}
+
+function enviar(){
+
+let datos=[];
+
+let incompleto=false;
+
+let peticion=document.getElementById("peticion").value;
+
+dias.forEach(d=>{
+
+let lectura=document.getElementById(d+"-lectura").value;
+let oracion=document.getElementById(d+"-oracion").value;
+let dios=document.getElementById(d+"-dios").value;
+
+if(!lectura || !oracion || !dios){
+
+incompleto=true;
+
+}
+
+datos.push({
+
+usuario:usuario,
+dia:d,
+lectura:lectura,
+oracion:oracion,
+dios:dios,
+peticion:peticion
+
+});
+
+});
+
+if(incompleto){
+
+alert("Debes llenar todos los campos antes de enviar");
+
+return;
+
+}
+
+fetch("https://script.google.com/macros/s/AKfycbwY61fDgvy955nDK0VG5NcIzitADyIQ0TtVOYATT1C_W0EfVzwS-HSmcCIhMzqnwwI0pA/exec",{
+method:"POST",
+body:JSON.stringify(datos)
+})
+
+.then(r=>r.text())
+.then(()=>{
+
+alert("Datos enviados correctamente");
+
+localStorage.removeItem("datos");
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
