@@ -74,70 +74,67 @@ margin-top:5px;
 
 .tabla-container{
 width:100%;
-overflow-x:hidden;
+overflow-x:auto;
 }
 
 table{
 width:100%;
 margin-top:25px;
 border-collapse:separate;
-border-spacing:10px 24px;
-table-layout:fixed;
+border-spacing:14px 24px;
 }
 
+/* encabezados */
 th{
 font-size:13px;
 opacity:0.6;
 font-weight:600;
 padding-bottom:10px;
+text-align:center;
 }
 
-tr{
-box-shadow:none;
-}
-
+/* celdas */
 td{
-padding:12px;
+padding:14px;
 vertical-align:top;
 background:white;
 border-radius:14px;
 box-shadow:0 8px 18px rgba(0,0,0,0.05);
 }
 
-/* Día más pequeño */
+/* columna día */
 td:first-child{
-width:40px;
-min-width:40px;
+width:55px;
+min-width:55px;
 text-align:center;
-padding:6px 2px;
+padding:8px 4px;
+background:transparent;
+box-shadow:none;
 }
-
-/* Distribución de columnas */
-td:nth-child(2){ width:30%; }
-td:nth-child(3){ width:20%; }
-td:nth-child(4){ width:30%; }
 
 .dia-badge{
 display:inline-block;
-padding:4px 6px;
-border-radius:8px;
+padding:5px 8px;
+border-radius:10px;
 background:#eef5ff;
 color:#1f6fb2;
 font-size:10px;
 font-weight:600;
 }
 
+/* textarea mejorado */
 textarea{
 width:100%;
 background:#f5f9ff;
 border:1px solid rgba(0,0,0,0.05);
 border-radius:12px;
-padding:10px;
+padding:14px;
 color:#1a2a44;
-resize:none;
-height:85px;
-font-size:13px;
+resize:vertical;
+min-height:110px;
+font-size:14px;
 transition:0.2s;
+box-sizing:border-box;
 }
 
 textarea:focus{
@@ -145,33 +142,6 @@ outline:none;
 border:1px solid #4da3ff;
 background:white;
 box-shadow:0 0 0 2px rgba(77,163,255,0.2);
-}
-
-/* 📱 MOBILE OPTIMIZADO */
-@media (max-width:768px){
-
-.container{
-padding:15px 8px;
-}
-
-table{
-border-spacing:6px 18px;
-}
-
-td{
-padding:8px;
-}
-
-textarea{
-height:110px;
-font-size:13px;
-}
-
-td:first-child{
-width:35px;
-min-width:35px;
-}
-
 }
 
 .peticion{
@@ -233,6 +203,29 @@ margin-top:10px;
 padding:12px 25px;
 background:linear-gradient(135deg,#1f6fb2,#0b3d91);
 color:white;
+}
+
+/* móvil */
+@media (max-width:768px){
+
+table{
+border-spacing:10px 18px;
+}
+
+textarea{
+min-height:100px;
+font-size:13px;
+}
+
+td{
+padding:12px;
+}
+
+td:first-child{
+width:50px;
+min-width:50px;
+}
+
 }
 
 @keyframes fadeIn{
@@ -398,15 +391,13 @@ setTimeout(desbloquearBoton,60000-diferencia);
 
 function bloquearBoton(){
 let btn=document.querySelector(".enviar");
-if(!btn) return;
 btn.disabled=true;
-btn.innerText="Ya se ha enviado tu devocional";
+btn.innerText="Ya enviado";
 btn.style.background="gray";
 }
 
 function desbloquearBoton(){
 let btn=document.querySelector(".enviar");
-if(!btn) return;
 btn.disabled=false;
 btn.innerText="Enviar";
 btn.style.background="linear-gradient(135deg,#1f6fb2,#0b3d91)";
@@ -444,18 +435,16 @@ return;
 }
 
 if(errorOracion){
-alert("La oración debe ser contestada solo con números");
+alert("La oración debe ser número");
 desbloquearBoton();
 return;
 }
 
 fetch("https://script.google.com/macros/s/AKfycbyYwcuWOCdorgkWBybhxrZt2NwiGPr4A_6FAH1b2FGNOEbcxf5SXZgc7NffPRVH7hHdog/exec", {
-method: "POST",
-mode: "no-cors",
-headers: {
-"Content-Type": "application/json"
-},
-body: JSON.stringify(datos)
+method:"POST",
+mode:"no-cors",
+headers:{ "Content-Type":"application/json" },
+body:JSON.stringify(datos)
 })
 .then(()=>{
 alert("Enviado correctamente");
@@ -463,8 +452,7 @@ localStorage.setItem("tiempoEnvio",Date.now());
 bloquearBoton();
 localStorage.removeItem("datos");
 })
-.catch(err=>{
-console.error(err);
+.catch(()=>{
 alert("Error de conexión");
 desbloquearBoton();
 });
