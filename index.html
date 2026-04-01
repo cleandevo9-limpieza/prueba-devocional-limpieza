@@ -28,7 +28,6 @@ box-shadow:0 20px 40px rgba(0,0,0,0.08);
 animation:fadeIn 0.6s ease;
 }
 
-/* 🔥 NUEVO: pestañas estilo iOS */
 .tabs{
 display:flex;
 background:#eef5ff;
@@ -255,10 +254,9 @@ to{opacity:1; transform:translateY(0);}
 
 <div class="container">
 
-<!-- 🔥 NUEVO -->
 <div class="tabs" id="tabs" style="display:none;">
-<div class="tab active" onclick="cambiarVista('actual')">Semana actual</div>
-<div class="tab" onclick="cambiarVista('anterior')">Semana anterior</div>
+<div class="tab active" onclick="cambiarVista('actual', this)">Semana actual</div>
+<div class="tab" onclick="cambiarVista('anterior', this)">Semana anterior</div>
 </div>
 
 <div class="header">
@@ -357,11 +355,11 @@ controlarEnvio();
 activarBotonSecreto();
 }
 
-function cambiarVista(tipo){
+function cambiarVista(tipo, el){
 vista=tipo;
 
 document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-event.target.classList.add("active");
+el.classList.add("active");
 
 if(tipo==="actual"){
 cargarDatos();
@@ -439,12 +437,35 @@ document.getElementById(d+"-dios").value=datos[d]?.dios||"";
 document.getElementById("peticion").value=datos["peticion"]||"";
 }
 
-function enviar(){
+function controlarEnvio(){
+let tiempoGuardado=localStorage.getItem("tiempoEnvio");
 
-let datosGuardados=JSON.parse(localStorage.getItem("datos"));
-if(datosGuardados){
-localStorage.setItem("semanaAnterior",JSON.stringify(datosGuardados));
+if(tiempoGuardado){
+let diferencia=Date.now()-parseInt(tiempoGuardado);
+
+if(diferencia<60000){
+bloquearBoton();
+setTimeout(desbloquearBoton,60000-diferencia);
 }
+}
+}
+
+function bloquearBoton(){
+let btn=document.querySelector(".enviar");
+btn.disabled=true;
+btn.innerText="Ya se ha enviado tu devocional";
+btn.style.background="gray";
+}
+
+function desbloquearBoton(){
+let btn=document.querySelector(".enviar");
+btn.disabled=false;
+btn.innerText="Enviar";
+btn.style.background="linear-gradient(135deg,#1f6fb2,#0b3d91)";
+localStorage.removeItem("tiempoEnvio");
+}
+
+function enviar(){
 
 let btn=document.querySelector(".enviar");
 btn.disabled=true;
@@ -480,16 +501,36 @@ desbloquearBoton();
 return;
 }
 
+// guardar semana anterior
+let dataGuardar={};
+dias.forEach(d=>{
+dataGuardar[d]={
+lectura:document.getElementById(d+"-lectura").value,
+oracion:document.getElementById(d+"-oracion").value,
+dios:document.getElementById(d+"-dios").value
+}
+});
+dataGuardar["peticion"]=peticion;
+localStorage.setItem("semanaAnterior",JSON.stringify(dataGuardar));
+
+// enviar
 fetch("https://script.google.com/macros/s/AKfycbyYwcuWOCdorgkWBybhxrZt2NwiGPr4A_6FAH1b2FGNOEbcxf5SXZgc7NffPRVH7hHdog/exec", {
 method:"POST",
 mode:"no-cors",
-headers:{"Content-Type":"application/json"},
+headers:{
+"Content-Type":"application/json"
+},
 body:JSON.stringify(datos)
 })
 .then(()=>{
 alert("Enviado correctamente");
+
 localStorage.setItem("tiempoEnvio",Date.now());
-bloquearBoton();
+
+btn.disabled=true;
+btn.innerText="Ya se ha enviado tu devocional";
+btn.style.background="gray";
+
 localStorage.removeItem("datos");
 })
 .catch(()=>{
@@ -497,6 +538,29 @@ alert("Error de conexión");
 desbloquearBoton();
 });
 
+}
+
+function activarBotonSecreto(){
+let titulo = document.getElementById("titulo");
+
+titulo.addEventListener("click", function(){
+
+contadorClicks++;
+
+if(contadorClicks === 5){
+
+if(confirm("¿Deseas cambiar de usuario?")){
+localStorage.removeItem("usuario");
+localStorage.removeItem("datos");
+location.reload();
+}
+
+contadorClicks = 0;
+}
+
+setTimeout(()=>{contadorClicks = 0;}, 1500);
+
+});
 }
 
 </script>
