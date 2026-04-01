@@ -1,475 +1,173 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Ministerio de Limpieza</title>
+<title>Registro</title>
 
 <style>
-
 body{
+font-family: Arial, sans-serif;
 margin:0;
-font-family:-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-background:linear-gradient(135deg,#eaf2ff,#f8fbff);
-color:#1a2a44;
+background:#f5f5f5;
+}
+
+header{
+background:#0b5ed7;
+color:white;
+padding:15px;
+text-align:center;
 }
 
 .container{
-max-width:1000px;
-margin:25px auto;
-padding:30px;
-border-radius:22px;
-background:rgba(255,255,255,0.85);
-backdrop-filter:blur(15px);
-border:1px solid rgba(0,0,0,0.05);
-box-shadow:0 20px 40px rgba(0,0,0,0.08);
-animation:fadeIn 0.6s ease;
+padding:15px;
 }
 
-.header{
-text-align:center;
-margin-bottom:30px;
-}
-
-.header h1{
-font-size:30px;
-margin:0;
-font-weight:700;
-letter-spacing:-0.5px;
-color:#1f6fb2;
-}
-
-.header h2{
-margin-top:5px;
-font-size:15px;
-opacity:0.6;
-}
-
-#titulo{
-margin-top:15px;
-font-size:14px;
-font-weight:500;
-color:#1f6fb2;
-opacity:0.8;
-text-align:center;
-cursor:pointer; /* 🔥 indica que es clickeable */
-}
-
-.versiculo{
-background:#eef5ff;
-padding:14px;
-border-radius:14px;
-margin-top:15px;
-font-style:italic;
-font-size:13px;
-display:none;
-}
-
-.referencia{
-font-size:12px;
-opacity:0.7;
-margin-top:5px;
-}
-
-.tabla-container{
-width:100%;
-overflow-x:auto;
-}
-
-table{
-width:100%;
-margin-top:25px;
-border-collapse:separate;
-border-spacing:12px 28px;
-}
-
-th{
-font-size:13px;
-opacity:0.6;
-font-weight:600;
-padding-bottom:10px;
-}
-
-td{
-padding:16px;
-vertical-align:top;
+.card{
 background:white;
-border-radius:14px;
-box-shadow:0 8px 18px rgba(0,0,0,0.05);
-}
-
-td:first-child{
-width:50px;
-min-width:50px;
-text-align:center;
-padding:8px 4px;
-}
-
-.dia-badge{
-display:inline-block;
-padding:5px 8px;
-border-radius:10px;
-background:#eef5ff;
-color:#1f6fb2;
-font-size:10px;
-font-weight:600;
+border-radius:12px;
+padding:15px;
+margin-bottom:12px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
 textarea{
 width:100%;
-background:#f5f9ff;
-border:1px solid rgba(0,0,0,0.05);
-border-radius:12px;
-padding:12px;
-color:#1a2a44;
-resize:none;
-height:90px;
-font-size:13px;
-transition:0.2s;
-}
-
-textarea:focus{
+border:none;
 outline:none;
-border:1px solid #4da3ff;
-background:white;
-box-shadow:0 0 0 2px rgba(77,163,255,0.2);
-}
-
-.peticion{
-margin-top:30px;
-background:white;
-padding:18px;
-border-radius:16px;
-box-shadow:0 10px 20px rgba(0,0,0,0.05);
-}
-
-.botones{
-display:flex;
-gap:15px;
-margin-top:25px;
+resize:none;
+font-size:16px;
+min-height:80px;
 }
 
 button{
-flex:1;
-padding:15px;
-border:none;
-border-radius:14px;
-font-size:15px;
-font-weight:600;
-cursor:pointer;
-transition:0.25s;
-color:white;
-}
-
-.guardar{
-background:linear-gradient(135deg,#4da3ff,#1f6fb2);
-}
-
-.enviar{
-background:linear-gradient(135deg,#1f6fb2,#0b3d91);
-}
-
-button:hover{
-transform:translateY(-2px);
-box-shadow:0 10px 20px rgba(0,0,0,0.15);
-}
-
-.login{
-text-align:center;
-padding:30px 10px;
-}
-
-.login input{
+width:100%;
 padding:12px;
-border:1px solid rgba(0,0,0,0.1);
-border-radius:12px;
-background:white;
-text-align:center;
-width:80%;
-max-width:250px;
-}
-
-.login button{
-margin-top:10px;
-padding:12px 25px;
-background:linear-gradient(135deg,#1f6fb2,#0b3d91);
+border:none;
+border-radius:10px;
+background:#0b5ed7;
 color:white;
+font-size:16px;
 }
 
-@media (max-width:768px){
-td{
-padding:10px;
+.hidden{
+display:none;
 }
-textarea{
-height:70px;
-font-size:12px;
-}
-td:first-child{
-width:45px;
-min-width:45px;
-}
-}
-
-@keyframes fadeIn{
-from{opacity:0; transform:translateY(20px);}
-to{opacity:1; transform:translateY(0);}
-}
-
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<header>
+<h3 id="titulo">Usuario</h3>
+</header>
 
-<div class="header">
-<h1>Ministerio de Limpieza</h1>
-<h2>Registro Devocional Semanal</h2>
+<div class="container" id="contenido" style="display:none;">
 
-<div id="versiculo" class="versiculo">
-“Porque Dios no es injusto para olvidar vuestra obra…”
-<div class="referencia">Hebreos 6:10 RV 1960</div>
-</div>
-</div>
-
-<div id="login" class="login">
-<h3>Ingresar Usuario</h3>
-<input id="usuario" placeholder="Escribe tu usuario">
-<br>
-<button onclick="entrar()">Entrar</button>
+<div class="card">
+<b>Lectura</b>
+<textarea id="lectura"></textarea>
 </div>
 
-<div id="app" style="display:none">
-
-<h3 id="titulo"></h3>
-
-<div class="tabla-container">
-<table>
-<tr>
-<th>Día</th>
-<th>Lectura</th>
-<th>Oración (min)</th>
-<th>Lo que Dios me habló</th>
-</tr>
-<tbody id="tabla"></tbody>
-</table>
+<div class="card">
+<b>Oración</b>
+<textarea id="oracion"></textarea>
 </div>
 
-<div class="peticion">
-<strong>Petición de oración</strong>
-<br><br>
-<textarea id="peticion"></textarea>
+<div class="card">
+<b>Dios me habló</b>
+<textarea id="mensaje"></textarea>
 </div>
 
-<div class="botones">
-<button class="guardar" onclick="guardar()">Guardar</button>
-<button class="enviar" onclick="enviar()">Enviar</button>
-</div>
+<button onclick="guardar()">Guardar</button>
 
 </div>
+
+<div class="container" id="login">
+
+<div class="card">
+<b>Ingresa tu nombre</b>
+<input type="text" id="nombre" style="width:100%;padding:10px;border:none;outline:none;">
+</div>
+
+<button onclick="iniciar()">Entrar</button>
 
 </div>
 
 <script>
 
-const dias=["Lun","Mar","Mié","Jue","Vie","Sáb"];
-let usuario="";
-let contadorClicks = 0;
+// iniciar sesión
+function iniciar(){
+let nombre = document.getElementById("nombre").value.trim();
 
-window.onload=function(){
-let usuarioGuardado=localStorage.getItem("usuario");
+if(nombre === "") return alert("Escribe tu nombre");
 
-if(usuarioGuardado){
-usuario=usuarioGuardado;
+localStorage.setItem("usuario", nombre);
+location.reload();
+}
+
+// cargar usuario
+window.onload = function(){
+
+let usuario = localStorage.getItem("usuario");
+
+if(usuario){
 document.getElementById("login").style.display="none";
-document.getElementById("app").style.display="block";
-document.getElementById("titulo").innerText="Usuario: "+usuario;
-document.getElementById("versiculo").style.display="block";
-crearTabla();
-cargarDatos();
-controlarEnvio();
-activarBotonSecreto();
-}
+document.getElementById("contenido").style.display="block";
+document.getElementById("titulo").innerText="Usuario: " + usuario;
 }
 
-function entrar(){
-usuario=document.getElementById("usuario").value.trim();
+// activar botón secreto
+activarResetUsuario();
 
-if(usuario==""){
-alert("Escribe un usuario");
-return;
 }
 
-localStorage.setItem("usuario",usuario);
+// guardar datos
+function guardar(){
+let data = {
+lectura: document.getElementById("lectura").value,
+oracion: document.getElementById("oracion").value,
+mensaje: document.getElementById("mensaje").value
+};
 
-document.getElementById("login").style.display="none";
-document.getElementById("app").style.display="block";
-
-document.getElementById("titulo").innerText="Usuario: "+usuario;
-document.getElementById("versiculo").style.display="block";
-
-crearTabla();
-controlarEnvio();
-activarBotonSecreto();
+localStorage.setItem("datos", JSON.stringify(data));
+alert("Guardado");
 }
 
-function activarBotonSecreto(){
-let titulo = document.getElementById("titulo");
+// 🔥 BOTÓN SECRETO (NO AFECTA DISEÑO)
+function activarResetUsuario(){
 
-titulo.addEventListener("click", function(){
+let clicks = 0;
+let timer;
 
-contadorClicks++;
+const titulo = document.getElementById("titulo");
 
-if(contadorClicks === 5){
+if(!titulo) return;
 
-if(confirm("¿Deseas cambiar de usuario?")){
+["click","touchstart"].forEach(evt => {
+
+titulo.addEventListener(evt, () => {
+
+clicks++;
+
+clearTimeout(timer);
+timer = setTimeout(()=>{
+clicks = 0;
+}, 2500);
+
+if(clicks >= 5){
+clicks = 0;
+
+if(confirm("¿Quieres cambiar de usuario?")){
 localStorage.removeItem("usuario");
 localStorage.removeItem("datos");
 location.reload();
 }
 
-contadorClicks = 0;
 }
-
-setTimeout(()=>{contadorClicks = 0;}, 1500);
 
 });
-}
 
-function crearTabla(){
-let html="";
-
-dias.forEach(d=>{
-html+=`
-<tr>
-<td><span class="dia-badge">${d}</span></td>
-<td><textarea id="${d}-lectura"></textarea></td>
-<td><textarea id="${d}-oracion"></textarea></td>
-<td><textarea id="${d}-dios"></textarea></td>
-</tr>`;
-});
-
-document.getElementById("tabla").innerHTML=html;
-}
-
-function guardar(){
-let data={};
-
-dias.forEach(d=>{
-data[d]={
-lectura:document.getElementById(d+"-lectura").value,
-oracion:document.getElementById(d+"-oracion").value,
-dios:document.getElementById(d+"-dios").value
-}
-});
-
-data["peticion"]=document.getElementById("peticion").value;
-
-localStorage.setItem("datos",JSON.stringify(data));
-alert("Progreso guardado");
-}
-
-function cargarDatos(){
-let datos=JSON.parse(localStorage.getItem("datos"));
-if(!datos) return;
-
-dias.forEach(d=>{
-if(datos[d]){
-document.getElementById(d+"-lectura").value=datos[d].lectura || "";
-document.getElementById(d+"-oracion").value=datos[d].oracion || "";
-document.getElementById(d+"-dios").value=datos[d].dios || "";
-}
-});
-
-document.getElementById("peticion").value=datos["peticion"] || "";
-}
-
-function controlarEnvio(){
-let tiempoGuardado=localStorage.getItem("tiempoEnvio");
-
-if(tiempoGuardado){
-let diferencia=Date.now()-parseInt(tiempoGuardado);
-
-if(diferencia<60000){
-bloquearBoton();
-setTimeout(desbloquearBoton,60000-diferencia);
-}
-}
-}
-
-function bloquearBoton(){
-let btn=document.querySelector(".enviar");
-if(!btn) return;
-btn.disabled=true;
-btn.innerText="Ya se ha enviado tu devocional";
-btn.style.background="gray";
-}
-
-function desbloquearBoton(){
-let btn=document.querySelector(".enviar");
-if(!btn) return;
-btn.disabled=false;
-btn.innerText="Enviar";
-btn.style.background="linear-gradient(135deg,#1f6fb2,#0b3d91)";
-localStorage.removeItem("tiempoEnvio");
-}
-
-function enviar(){
-
-let btn=document.querySelector(".enviar");
-btn.disabled=true;
-btn.innerText="Enviando...";
-btn.style.background="gray";
-
-let datos=[];
-let incompleto=false;
-let errorOracion=false;
-
-let peticion=document.getElementById("peticion").value;
-
-dias.forEach(d=>{
-let lectura=document.getElementById(d+"-lectura").value.trim();
-let oracion=document.getElementById(d+"-oracion").value.trim();
-let dios=document.getElementById(d+"-dios").value.trim();
-
-if(!lectura || !oracion || !dios) incompleto=true;
-if(!/^\d+$/.test(oracion)) errorOracion=true;
-
-datos.push({usuario,dia:d,lectura,oracion,dios,peticion});
-});
-
-if(incompleto){
-alert("Llena todos los campos");
-desbloquearBoton();
-return;
-}
-
-if(errorOracion){
-alert("La oración debe ser contestada solo con números");
-desbloquearBoton();
-return;
-}
-
-fetch("https://script.google.com/macros/s/AKfycbyYwcuWOCdorgkWBybhxrZt2NwiGPr4A_6FAH1b2FGNOEbcxf5SXZgc7NffPRVH7hHdog/exec", {
-method: "POST",
-mode: "no-cors",
-headers: {
-"Content-Type": "application/json"
-},
-body: JSON.stringify(datos)
-})
-.then(()=>{
-alert("Enviado correctamente");
-localStorage.setItem("tiempoEnvio",Date.now());
-bloquearBoton();
-localStorage.removeItem("datos");
-})
-.catch(err=>{
-console.error(err);
-alert("Error de conexión");
-desbloquearBoton();
 });
 
 }
