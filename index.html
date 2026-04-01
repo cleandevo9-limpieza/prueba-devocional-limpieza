@@ -54,26 +54,7 @@ font-weight:500;
 color:#1f6fb2;
 opacity:0.8;
 text-align:center;
-cursor:pointer;
-}
-
-/* 🔥 NUEVO: selector minimalista */
-.selector{
-margin-top:10px;
-text-align:center;
-}
-
-.selector select{
-appearance:none;
-padding:6px 12px;
-border-radius:10px;
-border:1px solid rgba(0,0,0,0.08);
-background:#f5f9ff;
-font-size:12px;
-color:#6b7280; /* gris */
-font-family:inherit;
-outline:none;
-cursor:pointer;
+cursor:pointer; /* 🔥 indica que es clickeable */
 }
 
 .versiculo{
@@ -190,6 +171,11 @@ background:linear-gradient(135deg,#4da3ff,#1f6fb2);
 background:linear-gradient(135deg,#1f6fb2,#0b3d91);
 }
 
+button:hover{
+transform:translateY(-2px);
+box-shadow:0 10px 20px rgba(0,0,0,0.15);
+}
+
 .login{
 text-align:center;
 padding:30px 10px;
@@ -210,6 +196,25 @@ margin-top:10px;
 padding:12px 25px;
 background:linear-gradient(135deg,#1f6fb2,#0b3d91);
 color:white;
+}
+
+@media (max-width:768px){
+td{
+padding:10px;
+}
+textarea{
+height:70px;
+font-size:12px;
+}
+td:first-child{
+width:45px;
+min-width:45px;
+}
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(20px);}
+to{opacity:1; transform:translateY(0);}
 }
 
 </style>
@@ -240,17 +245,6 @@ color:white;
 
 <h3 id="titulo"></h3>
 
-<!-- 🔥 NUEVO SELECTOR -->
-<div class="selector">
-<select id="selector" onchange="cambiarVista()">
-<option value="actual">Semana actual</option>
-<option value="pasada">Semana pasada</option>
-</select>
-</div>
-
-<!-- 🔥 VISTA ACTUAL -->
-<div id="vistaActual">
-
 <div class="tabla-container">
 <table>
 <tr>
@@ -276,11 +270,6 @@ color:white;
 
 </div>
 
-<!-- 🔥 VISTA PASADA -->
-<div id="vistaPasada" style="display:none;"></div>
-
-</div>
-
 </div>
 
 <script>
@@ -303,46 +292,6 @@ cargarDatos();
 controlarEnvio();
 activarBotonSecreto();
 }
-}
-
-function cambiarVista(){
-let v=document.getElementById("selector").value;
-
-if(v==="actual"){
-document.getElementById("vistaActual").style.display="block";
-document.getElementById("vistaPasada").style.display="none";
-}else{
-mostrarPasada();
-}
-}
-
-function mostrarPasada(){
-let datos=JSON.parse(localStorage.getItem("datos"));
-
-if(!datos){
-document.getElementById("vistaPasada").innerHTML="No hay datos guardados";
-}else{
-
-let html="<div style='background:#f5f9ff;padding:15px;border-radius:14px;'>";
-
-dias.forEach(d=>{
-html+=`
-<div style="margin-bottom:10px;">
-<strong>${d}</strong><br>
-Lectura: ${datos[d]?.lectura || ""}<br>
-Oración: ${datos[d]?.oracion || ""}<br>
-Dios me habló: ${datos[d]?.dios || ""}
-</div>`;
-});
-
-html+=`<br><strong>Petición:</strong><br>${datos["peticion"] || ""}`;
-html+="</div>";
-
-document.getElementById("vistaPasada").innerHTML=html;
-}
-
-document.getElementById("vistaActual").style.display="none";
-document.getElementById("vistaPasada").style.display="block";
 }
 
 function entrar(){
@@ -437,9 +386,93 @@ document.getElementById(d+"-dios").value=datos[d].dios || "";
 document.getElementById("peticion").value=datos["peticion"] || "";
 }
 
-function controlarEnvio(){}
+function controlarEnvio(){
+let tiempoGuardado=localStorage.getItem("tiempoEnvio");
 
-function enviar(){}
+if(tiempoGuardado){
+let diferencia=Date.now()-parseInt(tiempoGuardado);
+
+if(diferencia<60000){
+bloquearBoton();
+setTimeout(desbloquearBoton,60000-diferencia);
+}
+}
+}
+
+function bloquearBoton(){
+let btn=document.querySelector(".enviar");
+if(!btn) return;
+btn.disabled=true;
+btn.innerText="Ya se ha enviado tu devocional";
+btn.style.background="gray";
+}
+
+function desbloquearBoton(){
+let btn=document.querySelector(".enviar");
+if(!btn) return;
+btn.disabled=false;
+btn.innerText="Enviar";
+btn.style.background="linear-gradient(135deg,#1f6fb2,#0b3d91)";
+localStorage.removeItem("tiempoEnvio");
+}
+
+function enviar(){
+
+let btn=document.querySelector(".enviar");
+btn.disabled=true;
+btn.innerText="Enviando...";
+btn.style.background="gray";
+
+let datos=[];
+let incompleto=false;
+let errorOracion=false;
+
+let peticion=document.getElementById("peticion").value;
+
+dias.forEach(d=>{
+let lectura=document.getElementById(d+"-lectura").value.trim();
+let oracion=document.getElementById(d+"-oracion").value.trim();
+let dios=document.getElementById(d+"-dios").value.trim();
+
+if(!lectura || !oracion || !dios) incompleto=true;
+if(!/^\d+$/.test(oracion)) errorOracion=true;
+
+datos.push({usuario,dia:d,lectura,oracion,dios,peticion});
+});
+
+if(incompleto){
+alert("Llena todos los campos");
+desbloquearBoton();
+return;
+}
+
+if(errorOracion){
+alert("La oración debe ser contestada solo con números");
+desbloquearBoton();
+return;
+}
+
+fetch("https://script.google.com/macros/s/AKfycbyYwcuWOCdorgkWBybhxrZt2NwiGPr4A_6FAH1b2FGNOEbcxf5SXZgc7NffPRVH7hHdog/exec", {
+method: "POST",
+mode: "no-cors",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify(datos)
+})
+.then(()=>{
+alert("Enviado correctamente");
+localStorage.setItem("tiempoEnvio",Date.now());
+bloquearBoton();
+localStorage.removeItem("datos");
+})
+.catch(err=>{
+console.error(err);
+alert("Error de conexión");
+desbloquearBoton();
+});
+
+}
 
 </script>
 
