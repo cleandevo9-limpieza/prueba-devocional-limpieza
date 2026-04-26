@@ -43,9 +43,7 @@ cursor:pointer;
 font-size:14px;
 }
 
-.menu div:hover{
-background:#eef5ff;
-}
+.menu div:hover{ background:#eef5ff; }
 
 .container{
 max-width:1000px;
@@ -90,7 +88,7 @@ margin-bottom:30px;
 }
 
 .header h1{
-font-size:30px;
+font-size:28px;
 margin:0;
 font-weight:700;
 letter-spacing:-0.5px;
@@ -99,7 +97,7 @@ color:#1f6fb2;
 
 .header h2{
 margin-top:5px;
-font-size:15px;
+font-size:14px;
 opacity:0.6;
 }
 
@@ -138,34 +136,34 @@ table{
 width:100%;
 margin-top:15px;
 border-collapse:separate;
-border-spacing:6px 8px;
+border-spacing:5px 10px;
 }
 
 th{
-font-size:12px;
+font-size:11px;
 opacity:0.6;
 font-weight:600;
-padding-bottom:10px;
+padding-bottom:6px;
 }
 
 td{
-padding:6px 12px;
+padding:8px 10px;
 vertical-align:top;
 background:white;
 border-radius:16px;
-box-shadow:0 10px 22px rgba(0,0,0,0.06);
+box-shadow:0 6px 18px rgba(0,0,0,0.06);
 }
 
 td:first-child{
-width:55px;
-min-width:55px;
+width:44px;
+min-width:44px;
 text-align:center;
-padding:6px 4px;
+padding:8px 4px;
 }
 
 .dia-badge{
 display:inline-block;
-padding:5px 8px;
+padding:5px 6px;
 border-radius:10px;
 background:#eef5ff;
 color:#1f6fb2;
@@ -173,25 +171,28 @@ font-size:10px;
 font-weight:600;
 }
 
+/* ── TEXTAREAS GENERALES ── */
 textarea{
 width:100%;
 background:#f5f9ff;
-border:1px solid rgba(0,0,0,0.05);
+border:2px solid transparent;
 border-radius:12px;
 padding:10px;
 color:#1a2a44;
 resize:none;
-height:130px;
-font-size:13px;
-transition:0.2s;
+height:80px;
+font-size:14px;
+line-height:1.5;
+transition:border 0.2s, background 0.2s, box-shadow 0.2s;
 box-sizing:border-box;
+font-family:inherit;
 }
 
 textarea:focus{
 outline:none;
-border:1px solid #4da3ff;
+border:2px solid #4da3ff;
 background:white;
-box-shadow:0 0 0 2px rgba(77,163,255,0.2);
+box-shadow:0 0 0 3px rgba(77,163,255,0.15);
 }
 
 textarea.readonly{
@@ -199,31 +200,42 @@ background:#f0f0f0;
 pointer-events:none;
 }
 
-/* ── CAMPO DE ORACIÓN ── */
-.oracion-wrap{
-position:relative;
-width:100%;
-box-sizing:border-box;
-}
-
+/* ── CAMPO ORACIÓN ── */
 .oracion-input{
 width:100%;
 background:#f5f9ff;
-border:1px solid rgba(0,0,0,0.05);
+border:2px solid transparent;
 border-radius:12px;
-padding:10px 10px 28px 10px;
+padding:10px;
 color:#1a2a44;
-font-size:13px;
+font-size:14px;
+line-height:1.5;
 font-family:inherit;
-transition:0.2s;
 box-sizing:border-box;
 outline:none;
+transition:border 0.2s, background 0.2s, box-shadow 0.2s;
+min-height:80px;
+display:block;
+resize:none;
+/* input de una línea pero estilo textarea */
 }
 
 .oracion-input:focus{
-border:1px solid #4da3ff;
+border:2px solid #4da3ff;
 background:white;
-box-shadow:0 0 0 2px rgba(77,163,255,0.2);
+box-shadow:0 0 0 3px rgba(77,163,255,0.15);
+}
+
+.oracion-input.valido{
+border:2px solid #1f9b5e !important;
+background:#f0faf5 !important;
+box-shadow:0 0 0 3px rgba(31,155,94,0.12) !important;
+}
+
+.oracion-input.invalido{
+border:2px solid #c0392b !important;
+background:#fff5f5 !important;
+box-shadow:0 0 0 3px rgba(192,57,43,0.12) !important;
 }
 
 .oracion-input.readonly{
@@ -231,44 +243,28 @@ background:#f0f0f0;
 pointer-events:none;
 }
 
-.oracion-hint{
-position:absolute;
-bottom:8px;
-left:10px;
-font-size:10px;
-color:#aaa;
-pointer-events:none;
-}
-
-.oracion-preview{
-font-size:10px;
-margin-top:3px;
-padding-left:2px;
-min-height:14px;
-transition:0.2s;
-}
-
-.oracion-preview.ok{ color:#1f9b5e; }
-.oracion-preview.err{ color:#c0392b; }
-
 /* ── PETICIÓN ── */
 .peticion{
-margin-top:30px;
+margin-top:24px;
 background:white;
 padding:16px;
 border-radius:16px;
 box-shadow:0 10px 20px rgba(0,0,0,0.05);
 }
 
+.peticion textarea{
+height:100px;
+}
+
 .botones{
 display:flex;
-gap:15px;
-margin-top:25px;
+gap:12px;
+margin-top:22px;
 }
 
 button{
 flex:1;
-padding:15px;
+padding:16px;
 border:none;
 border-radius:14px;
 font-size:15px;
@@ -278,13 +274,8 @@ transition:0.25s;
 color:white;
 }
 
-.guardar{
-background:linear-gradient(135deg,#4da3ff,#1f6fb2);
-}
-
-.enviar{
-background:linear-gradient(135deg,#1f6fb2,#0b3d91);
-}
+.guardar{ background:linear-gradient(135deg,#4da3ff,#1f6fb2); }
+.enviar{  background:linear-gradient(135deg,#1f6fb2,#0b3d91); }
 
 button:hover{
 transform:translateY(-2px);
@@ -304,6 +295,7 @@ background:white;
 text-align:center;
 width:80%;
 max-width:250px;
+font-size:15px;
 }
 
 .login button{
@@ -313,15 +305,8 @@ background:linear-gradient(135deg,#1f6fb2,#0b3d91);
 color:white;
 }
 
-#envios{
-display:none;
-margin-top:10px;
-}
-
-#envios h3{
-color:#1f6fb2;
-margin-bottom:5px;
-}
+#envios{ display:none; margin-top:10px; }
+#envios h3{ color:#1f6fb2; margin-bottom:5px; }
 
 .card-envio{
 background:white;
@@ -399,11 +384,7 @@ font-weight:600;
 margin-bottom:12px;
 }
 
-.btn-reload:hover{
-background:#d9ecff;
-transform:none;
-box-shadow:none;
-}
+.btn-reload:hover{ background:#d9ecff; transform:none; box-shadow:none; }
 
 /* ── BOTÓN FLOTANTE ── */
 .btn-imprimir-flotante{
@@ -443,11 +424,42 @@ body > *:not(#area-impresion){ display:none !important; }
 }
 }
 
+/* ── MÓVIL ── */
 @media(max-width:768px){
-.container{padding:18px;}
-td{padding:6px 10px;}
-textarea{ min-height:70px; height:70px; }
-.btn-imprimir-flotante{ bottom:16px; right:16px; padding:12px 18px; font-size:14px; }
+.container{ padding:14px; margin:10px; border-radius:18px; }
+
+table{ border-spacing:4px 8px; }
+
+td{ padding:6px 8px; border-radius:12px; }
+td:first-child{ width:36px; min-width:36px; }
+
+.dia-badge{ font-size:9px; padding:4px 5px; }
+
+textarea{
+  height:72px;
+  font-size:14px;
+  padding:9px;
+}
+
+.oracion-input{
+  min-height:72px;
+  font-size:14px;
+  padding:9px;
+}
+
+th{ font-size:10px; }
+
+.header h1{ font-size:22px; }
+.header h2{ font-size:13px; }
+
+.botones{ gap:10px; }
+button{ padding:14px; font-size:14px; }
+
+.btn-imprimir-flotante{
+  bottom:16px; right:16px;
+  padding:12px 18px;
+  font-size:14px;
+}
 }
 
 @keyframes fadeIn{
@@ -546,65 +558,59 @@ let contadorClicks = 0;
 let vista = "actual";
 
 // ── PARSEAR TIEMPO ────────────────────────────────
-// Devuelve { ok, minutos, texto } 
-// texto = "1 hora 30 minutos" para enviar a Sheets
 function parsearTiempo(raw){
-  const s = raw.trim().toLowerCase();
-  if(!s) return { ok:false, minutos:0, texto:"" };
+  let s = raw.trim().toLowerCase();
+  if(!s) return { ok:false };
+
+  // Normalizar palabras en español
+  s = s
+    .replace(/horas?/g,   "h")
+    .replace(/minutos?/g, "m")
+    .replace(/mins?/g,    "m")
+    .replace(/hrs?/g,     "h");
+
+  // Quitar espacios entre número y unidad: "1 h 30 m" → "1h30m"
+  s = s.replace(/(\d)\s+([hm])/g, "$1$2");
+  s = s.replace(/([hm])\s+(\d)/g, "$1$2");
 
   let h = 0, m = 0;
+  let match;
 
-  // Formato 1:30 o 1:05
-  let match = s.match(/^(\d+):(\d{1,2})$/);
-  if(match){
-    h = parseInt(match[1]);
-    m = parseInt(match[2]);
-  }
+  // Formato 1:30
+  match = s.match(/^(\d+):(\d{1,2})$/);
+  if(match){ h = parseInt(match[1]); m = parseInt(match[2]); }
 
-  // Formato 1h30m / 1h 30m / 1h30 / 2h
+  // Formato 1h30m / 1h30 / 1h / 30m
   if(!match){
-    match = s.match(/^(\d+)\s*h(?:r|rs|ora|oras)?\s*(\d+)?\s*m?$/);
-    if(match){
-      h = parseInt(match[1]);
+    match = s.match(/^(?:(\d+)h)?(?:(\d+)m)?$/);
+    if(match && (match[1] || match[2])){
+      h = match[1] ? parseInt(match[1]) : 0;
       m = match[2] ? parseInt(match[2]) : 0;
-    }
-  }
-
-  // Formato 30m / 45min / 90min
-  if(!match){
-    match = s.match(/^(\d+)\s*m(?:in(?:utos?)?)?$/);
-    if(match){
-      h = 0;
-      m = parseInt(match[1]);
-    }
+    } else { match = null; }
   }
 
   // Solo número → minutos
   if(!match){
     match = s.match(/^(\d+)$/);
-    if(match){
-      h = 0;
-      m = parseInt(match[1]);
-    }
+    if(match){ h = 0; m = parseInt(match[1]); }
   }
 
-  if(!match && h === 0 && m === 0) return { ok:false, minutos:0, texto:"" };
+  if(!match) return { ok:false };
 
-  // Normalizar: si minutos >= 60 pasar a horas
+  // Pasar exceso de minutos a horas
   h += Math.floor(m / 60);
-  m = m % 60;
+  m  = m % 60;
 
-  const totalMin = h * 60 + m;
-  if(totalMin <= 0)  return { ok:false, minutos:0, texto:"" };
-  if(totalMin > 300) return { ok:false, minutos:totalMin, texto:"", excede:true };
+  const total = h * 60 + m;
+  if(total <= 0)  return { ok:false };
+  if(total > 300) return { ok:false, excede:true };
 
-  // Construir texto legible para Sheets
   let texto = "";
   if(h > 0 && m > 0) texto = `${h} hora${h>1?"s":""} ${m} minuto${m>1?"s":""}`;
   else if(h > 0)     texto = `${h} hora${h>1?"s":""}`;
   else               texto = `${m} minuto${m>1?"s":""}`;
 
-  return { ok:true, minutos:totalMin, texto };
+  return { ok:true, texto };
 }
 
 // ── MENÚ ──────────────────────────────────────────
@@ -615,15 +621,15 @@ function toggleMenu(){
 
 function mostrarVista(v){
   document.getElementById("menu").style.display = "none";
-  const btnImprimir = document.getElementById("btnImprimir");
+  const btn = document.getElementById("btnImprimir");
   if(v === "devocional"){
     document.getElementById("contenidoPrincipal").style.display = "block";
     document.getElementById("envios").style.display = "none";
-    btnImprimir.style.display = "none";
+    btn.style.display = "none";
   } else {
     document.getElementById("contenidoPrincipal").style.display = "none";
     document.getElementById("envios").style.display = "block";
-    btnImprimir.style.display = "block";
+    btn.style.display = "block";
     cargarEnvios();
   }
 }
@@ -647,7 +653,7 @@ window.onload = function(){
 
 function entrar(){
   usuario = document.getElementById("usuario").value.trim();
-  if(usuario === ""){ alert("Escribe un usuario"); return; }
+  if(!usuario){ alert("Escribe un usuario"); return; }
   localStorage.setItem("usuario", usuario);
   document.getElementById("login").style.display  = "none";
   document.getElementById("app").style.display    = "block";
@@ -681,17 +687,11 @@ function crearTabla(){
       <td><span class="dia-badge">${d}</span></td>
       <td><textarea id="${d}-lectura"></textarea></td>
       <td>
-        <div class="oracion-wrap">
-          <input
-            class="oracion-input"
-            id="${d}-oracion"
-            type="text"
-            placeholder="ej: 30, 1:30, 1h30m"
-            oninput="validarOracion('${d}')"
-          >
-          <span class="oracion-hint">min · 1:30 · 1h30m · 1h</span>
-        </div>
-        <div class="oracion-preview" id="${d}-preview"></div>
+        <textarea
+          class="oracion-input"
+          id="${d}-oracion"
+          oninput="validarOracion('${d}')"
+        ></textarea>
       </td>
       <td><textarea id="${d}-dios"></textarea></td>
     </tr>`;
@@ -700,19 +700,19 @@ function crearTabla(){
 }
 
 function validarOracion(d){
-  const val = document.getElementById(d+"-oracion").value;
-  const prev = document.getElementById(d+"-preview");
-  if(!val.trim()){ prev.textContent = ""; prev.className = "oracion-preview"; return; }
+  const el  = document.getElementById(d+"-oracion");
+  const val = el.value;
+  if(!val.trim()){
+    el.classList.remove("valido","invalido");
+    return;
+  }
   const r = parsearTiempo(val);
   if(r.ok){
-    prev.textContent = "✓ " + r.texto;
-    prev.className = "oracion-preview ok";
-  } else if(r.excede){
-    prev.textContent = "✗ Máximo 5 horas";
-    prev.className = "oracion-preview err";
+    el.classList.add("valido");
+    el.classList.remove("invalido");
   } else {
-    prev.textContent = "✗ Formato no reconocido";
-    prev.className = "oracion-preview err";
+    el.classList.add("invalido");
+    el.classList.remove("valido");
   }
 }
 
@@ -758,15 +758,15 @@ function cargarAnterior(){
 // ── ENVIAR ────────────────────────────────────────
 function enviar(){
   const b = document.querySelector(".enviar");
-  b.disabled  = true;
+  b.disabled = true;
   b.innerText = "Enviando…";
   b.style.background = "gray";
 
-  let datos        = [];
-  let incompleto   = false;
+  let datos = [];
+  let incompleto = false;
   let errorOracion = false;
   let excedeTiempo = false;
-  const peticion   = document.getElementById("peticion").value;
+  const peticion = document.getElementById("peticion").value;
 
   const horaEnvio = new Date().toLocaleString("es-ES",{
     day:"2-digit", month:"2-digit", year:"numeric",
@@ -774,26 +774,34 @@ function enviar(){
   });
 
   dias.forEach(d => {
-    const lectura   = document.getElementById(d+"-lectura").value.trim();
+    const lectura    = document.getElementById(d+"-lectura").value.trim();
     const oracionRaw = document.getElementById(d+"-oracion").value.trim();
-    const dios      = document.getElementById(d+"-dios").value.trim();
+    const dios       = document.getElementById(d+"-dios").value.trim();
 
     if(!lectura || !oracionRaw || !dios) incompleto = true;
 
     const parsed = parsearTiempo(oracionRaw);
-    if(!parsed.ok && oracionRaw){
+    if(oracionRaw && !parsed.ok){
       if(parsed.excede) excedeTiempo = true;
       else errorOracion = true;
     }
 
-    // Enviar el texto legible a Sheets
     const oracionTexto = parsed.ok ? parsed.texto : oracionRaw;
     datos.push({ usuario, dia:d, lectura, oracion:oracionTexto, dios, peticion, hora:horaEnvio });
   });
 
-  if(incompleto){   alert("Llena todos los campos"); desbloquearBoton(); return; }
-  if(excedeTiempo){ alert("El tiempo de oración no puede exceder 5 horas"); desbloquearBoton(); return; }
-  if(errorOracion){ alert("Revisa el formato del tiempo de oración.\nEjemplos válidos: 30, 1:30, 1h30m, 45min"); desbloquearBoton(); return; }
+  if(incompleto){
+    alert("Llena todos los campos");
+    desbloquearBoton(); return;
+  }
+  if(excedeTiempo){
+    alert("El tiempo de oración no puede exceder 5 horas");
+    desbloquearBoton(); return;
+  }
+  if(errorOracion){
+    alert("Revisa el tiempo de oración.\nEjemplos válidos:\n30 · 1:30 · 1h30m · 1 hora 30 minutos");
+    desbloquearBoton(); return;
+  }
 
   const guardarObj = {};
   dias.forEach(d => {
@@ -883,7 +891,6 @@ function cargarEnvios(){
       }
 
       const tiempoTxt = g.tiempo || "—";
-
       const petTxt = g.peticion && g.peticion !== "-"
         ? `<div class='peticion-txt'>🙏 ${escHtml(g.peticion)}</div>`
         : "";
