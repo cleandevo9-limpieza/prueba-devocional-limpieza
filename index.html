@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Ministerio de Limpieza</title>
-
 <style>
 
 body{
@@ -14,6 +11,40 @@ margin:0;
 font-family:-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
 background:linear-gradient(135deg,#eaf2ff,#f8fbff);
 color:#1a2a44;
+}
+
+.menu-btn{
+position:fixed;
+top:15px;
+left:15px;
+background:white;
+border-radius:12px;
+padding:10px 12px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+cursor:pointer;
+z-index:1000;
+}
+
+.menu{
+position:fixed;
+top:60px;
+left:15px;
+background:white;
+border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+overflow:hidden;
+display:none;
+z-index:1000;
+}
+
+.menu div{
+padding:12px 18px;
+cursor:pointer;
+font-size:14px;
+}
+
+.menu div:hover{
+background:#eef5ff;
 }
 
 .container{
@@ -32,9 +63,9 @@ animation:fadeIn 0.6s ease;
 display:flex;
 background:#eef5ff;
 border-radius:14px;
-padding:4px;
+padding:2px;
 gap:4px;
-margin-bottom:15px;
+margin-bottom:12px;
 }
 
 .tab{
@@ -42,7 +73,7 @@ flex:1;
 text-align:center;
 padding:8px;
 border-radius:10px;
-font-size:13px;
+font-size:12px;
 cursor:pointer;
 color:#1f6fb2;
 font-weight:500;
@@ -105,31 +136,31 @@ overflow-x:auto;
 
 table{
 width:100%;
-margin-top:25px;
+margin-top:15px;
 border-collapse:separate;
-border-spacing:12px 28px;
+border-spacing:6px 8px;
 }
 
 th{
-font-size:13px;
+font-size:12px;
 opacity:0.6;
 font-weight:600;
 padding-bottom:10px;
 }
 
 td{
-padding:16px;
+padding:6px 12px;
 vertical-align:top;
 background:white;
-border-radius:14px;
-box-shadow:0 8px 18px rgba(0,0,0,0.05);
+border-radius:16px;
+box-shadow:0 10px 22px rgba(0,0,0,0.06);
 }
 
 td:first-child{
-width:50px;
-min-width:50px;
+width:55px;
+min-width:55px;
 text-align:center;
-padding:8px 4px;
+padding:6px 4px;
 }
 
 .dia-badge{
@@ -147,12 +178,13 @@ width:100%;
 background:#f5f9ff;
 border:1px solid rgba(0,0,0,0.05);
 border-radius:12px;
-padding:12px;
+padding:10px;
 color:#1a2a44;
 resize:none;
-height:90px;
+height:130px;
 font-size:13px;
 transition:0.2s;
+box-sizing:border-box;
 }
 
 textarea:focus{
@@ -167,10 +199,63 @@ background:#f0f0f0;
 pointer-events:none;
 }
 
+/* ── CAMPO DE ORACIÓN ── */
+.oracion-wrap{
+position:relative;
+width:100%;
+box-sizing:border-box;
+}
+
+.oracion-input{
+width:100%;
+background:#f5f9ff;
+border:1px solid rgba(0,0,0,0.05);
+border-radius:12px;
+padding:10px 10px 28px 10px;
+color:#1a2a44;
+font-size:13px;
+font-family:inherit;
+transition:0.2s;
+box-sizing:border-box;
+outline:none;
+}
+
+.oracion-input:focus{
+border:1px solid #4da3ff;
+background:white;
+box-shadow:0 0 0 2px rgba(77,163,255,0.2);
+}
+
+.oracion-input.readonly{
+background:#f0f0f0;
+pointer-events:none;
+}
+
+.oracion-hint{
+position:absolute;
+bottom:8px;
+left:10px;
+font-size:10px;
+color:#aaa;
+pointer-events:none;
+}
+
+.oracion-preview{
+font-size:10px;
+margin-top:3px;
+padding-left:2px;
+min-height:14px;
+transition:0.2s;
+}
+
+.oracion-preview.ok{ color:#1f9b5e; }
+.oracion-preview.err{ color:#c0392b; }
+
+/* ── PETICIÓN ── */
 .peticion{
 margin-top:30px;
 background:white;
-padding:18px;
+padding:16px;
 border-radius:16px;
 box-shadow:0 10px 20px rgba(0,0,0,0.05);
 }
@@ -228,342 +313,689 @@ background:linear-gradient(135deg,#1f6fb2,#0b3d91);
 color:white;
 }
 
-@media (max-width:768px){
-td{
-padding:10px;
+#envios{
+display:none;
+margin-top:10px;
 }
-textarea{
-height:70px;
+
+#envios h3{
+color:#1f6fb2;
+margin-bottom:5px;
+}
+
+.card-envio{
+background:white;
+border-radius:16px;
+box-shadow:0 8px 20px rgba(0,0,0,0.06);
+padding:16px 20px;
+margin-bottom:14px;
+border-left:4px solid #1f6fb2;
+}
+
+.card-envio .cabecera{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:8px;
+}
+
+.card-envio .nombre{
+font-weight:700;
+font-size:15px;
+color:#1f6fb2;
+}
+
+.card-envio .hora{
 font-size:12px;
+color:#888;
+background:#eef5ff;
+padding:3px 8px;
+border-radius:8px;
 }
-td:first-child{
-width:45px;
-min-width:45px;
+
+.card-envio .detalle{
+font-size:13px;
+color:#444;
+margin-bottom:4px;
+}
+
+.card-envio .peticion-txt{
+font-size:12px;
+font-style:italic;
+color:#666;
+background:#f5f9ff;
+padding:8px 10px;
+border-radius:10px;
+margin-top:6px;
+}
+
+.tag-oracion{
+display:inline-block;
+background:#eef5ff;
+color:#1f6fb2;
+font-size:11px;
+font-weight:600;
+padding:3px 9px;
+border-radius:8px;
+margin-top:4px;
+}
+
+.sin-datos{
+text-align:center;
+color:#aaa;
+padding:30px;
+font-size:14px;
+}
+
+.btn-reload{
+background:#eef5ff;
+color:#1f6fb2;
+border:none;
+border-radius:10px;
+padding:8px 16px;
+font-size:13px;
+cursor:pointer;
+font-weight:600;
+margin-bottom:12px;
+}
+
+.btn-reload:hover{
+background:#d9ecff;
+transform:none;
+box-shadow:none;
+}
+
+/* ── BOTÓN FLOTANTE ── */
+.btn-imprimir-flotante{
+position:fixed;
+bottom:24px;
+right:24px;
+background:linear-gradient(135deg,#1f6fb2,#0b3d91);
+color:white;
+border:none;
+border-radius:50px;
+padding:14px 22px;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+box-shadow:0 8px 20px rgba(0,0,0,0.2);
+display:none;
+z-index:999;
+transition:0.25s;
+flex:unset;
+}
+
+.btn-imprimir-flotante:hover{
+transform:translateY(-3px);
+box-shadow:0 12px 25px rgba(0,0,0,0.25);
+}
+
+#area-impresion{ display:none; }
+
+@media print{
+body > *:not(#area-impresion){ display:none !important; }
+#area-impresion{
+  display:block !important;
+  position:static;
+  width:100%;
+  padding:30px;
+  box-sizing:border-box;
 }
 }
 
+@media(max-width:768px){
+.container{padding:18px;}
+td{padding:6px 10px;}
+textarea{ min-height:70px; height:70px; }
+.btn-imprimir-flotante{ bottom:16px; right:16px; padding:12px 18px; font-size:14px; }
+}
+
 @keyframes fadeIn{
-from{opacity:0; transform:translateY(20px);}
-to{opacity:1; transform:translateY(0);}
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
 }
 
 </style>
 </head>
-
 <body>
+
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+<div class="menu" id="menu">
+  <div onclick="mostrarVista('devocional')">📖 Mi devocional</div>
+  <div onclick="mostrarVista('envios')">📋 Envíos</div>
+</div>
 
 <div class="container">
 
-<div class="tabs" id="tabs" style="display:none;">
-<div class="tab active" onclick="cambiarVista('actual', this)">Semana actual</div>
-<div class="tab" onclick="cambiarVista('anterior', this)">Semana anterior</div>
+  <div id="contenidoPrincipal">
+
+    <div class="tabs" id="tabs" style="display:none;">
+      <div class="tab active" onclick="cambiarVista('actual', this)">Semana actual</div>
+      <div class="tab" onclick="cambiarVista('anterior', this)">Semana anterior</div>
+    </div>
+
+    <div class="header">
+      <h1>Ministerio de Limpieza</h1>
+      <h2>Registro Devocional Semanal</h2>
+      <div id="versiculo" class="versiculo">
+        "Porque Dios no es injusto para olvidar vuestra obra…"
+        <div class="referencia">Hebreos 6:10 RV 1960</div>
+      </div>
+    </div>
+
+    <div id="login" class="login">
+      <h3>Ingresar Usuario</h3>
+      <input id="usuario" placeholder="Escribe tu usuario">
+      <br>
+      <button onclick="entrar()">Entrar</button>
+    </div>
+
+    <div id="app" style="display:none;">
+
+      <h3 id="titulo"></h3>
+
+      <div class="tabla-container">
+        <table>
+          <tr>
+            <th>Día</th>
+            <th>Lectura</th>
+            <th>Oración</th>
+            <th>Lo que Dios me habló</th>
+          </tr>
+          <tbody id="tabla"></tbody>
+        </table>
+      </div>
+
+      <div class="peticion">
+        <strong>Petición de oración</strong><br><br>
+        <textarea id="peticion"></textarea>
+      </div>
+
+      <div class="botones">
+        <button class="guardar" onclick="guardar()">Guardar</button>
+        <button class="enviar"  onclick="enviar()">Enviar</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div id="envios">
+    <h3>📋 Envíos recientes</h3>
+    <button class="btn-reload" onclick="cargarEnvios()">↻ Actualizar</button>
+    <div id="listaEnvios"><p class="sin-datos">Cargando...</p></div>
+  </div>
+
 </div>
 
-<div class="header">
-<h1>Ministerio de Limpieza</h1>
-<h2>Registro Devocional Semanal</h2>
+<button class="btn-imprimir-flotante" id="btnImprimir" onclick="imprimirPeticiones()">
+  🙏 Imprimir peticiones
+</button>
 
-<div id="versiculo" class="versiculo">
-“Porque Dios no es injusto para olvidar vuestra obra…”
-<div class="referencia">Hebreos 6:10 RV 1960</div>
-</div>
-</div>
-
-<div id="login" class="login">
-<h3>Ingresar Usuario</h3>
-<input id="usuario" placeholder="Escribe tu usuario">
-<br>
-<button onclick="entrar()">Entrar</button>
-</div>
-
-<div id="app" style="display:none">
-
-<h3 id="titulo"></h3>
-
-<div class="tabla-container">
-<table>
-<tr>
-<th>Día</th>
-<th>Lectura</th>
-<th>Oración (min)</th>
-<th>Lo que Dios me habló</th>
-</tr>
-<tbody id="tabla"></tbody>
-</table>
-</div>
-
-<div class="peticion">
-<strong>Petición de oración</strong>
-<br><br>
-<textarea id="peticion"></textarea>
-</div>
-
-<div class="botones">
-<button class="guardar" onclick="guardar()">Guardar</button>
-<button class="enviar" onclick="enviar()">Enviar</button>
-</div>
-
-</div>
-
-</div>
+<div id="area-impresion"></div>
 
 <script>
 
-const dias=["Lun","Mar","Mié","Jue","Vie","Sáb"];
-let usuario="";
-let contadorClicks=0;
-let vista="actual";
+const URL_POST = "https://script.google.com/macros/s/AKfycbzUALo4H2xLrRTQTXre3Uq7FhzrxMntvstPfgWR8kC4QYHm1_TgjBmtaa-LmdTnzWaezQ/exec";
+const URL_GET  = "https://script.google.com/macros/s/AKfycbzUALo4H2xLrRTQTXre3Uq7FhzrxMntvstPfgWR8kC4QYHm1_TgjBmtaa-LmdTnzWaezQ/exec";
 
-window.onload=function(){
-let usuarioGuardado=localStorage.getItem("usuario");
+const dias = ["Lun","Mar","Mié","Jue","Vie","Sáb"];
+let usuario = "";
+let contadorClicks = 0;
+let vista = "actual";
 
-if(usuarioGuardado){
-usuario=usuarioGuardado;
-document.getElementById("login").style.display="none";
-document.getElementById("app").style.display="block";
-document.getElementById("tabs").style.display="flex";
+// ── PARSEAR TIEMPO ────────────────────────────────
+// Devuelve { ok, minutos, texto } 
+// texto = "1 hora 30 minutos" para enviar a Sheets
+function parsearTiempo(raw){
+  const s = raw.trim().toLowerCase();
+  if(!s) return { ok:false, minutos:0, texto:"" };
 
-document.getElementById("titulo").innerText="Usuario: "+usuario;
-document.getElementById("versiculo").style.display="block";
+  let h = 0, m = 0;
 
-crearTabla();
-cargarDatos();
-controlarEnvio();
-activarBotonSecreto();
+  // Formato 1:30 o 1:05
+  let match = s.match(/^(\d+):(\d{1,2})$/);
+  if(match){
+    h = parseInt(match[1]);
+    m = parseInt(match[2]);
+  }
+
+  // Formato 1h30m / 1h 30m / 1h30 / 2h
+  if(!match){
+    match = s.match(/^(\d+)\s*h(?:r|rs|ora|oras)?\s*(\d+)?\s*m?$/);
+    if(match){
+      h = parseInt(match[1]);
+      m = match[2] ? parseInt(match[2]) : 0;
+    }
+  }
+
+  // Formato 30m / 45min / 90min
+  if(!match){
+    match = s.match(/^(\d+)\s*m(?:in(?:utos?)?)?$/);
+    if(match){
+      h = 0;
+      m = parseInt(match[1]);
+    }
+  }
+
+  // Solo número → minutos
+  if(!match){
+    match = s.match(/^(\d+)$/);
+    if(match){
+      h = 0;
+      m = parseInt(match[1]);
+    }
+  }
+
+  if(!match && h === 0 && m === 0) return { ok:false, minutos:0, texto:"" };
+
+  // Normalizar: si minutos >= 60 pasar a horas
+  h += Math.floor(m / 60);
+  m = m % 60;
+
+  const totalMin = h * 60 + m;
+  if(totalMin <= 0)  return { ok:false, minutos:0, texto:"" };
+  if(totalMin > 300) return { ok:false, minutos:totalMin, texto:"", excede:true };
+
+  // Construir texto legible para Sheets
+  let texto = "";
+  if(h > 0 && m > 0) texto = `${h} hora${h>1?"s":""} ${m} minuto${m>1?"s":""}`;
+  else if(h > 0)     texto = `${h} hora${h>1?"s":""}`;
+  else               texto = `${m} minuto${m>1?"s":""}`;
+
+  return { ok:true, minutos:totalMin, texto };
 }
+
+// ── MENÚ ──────────────────────────────────────────
+function toggleMenu(){
+  const m = document.getElementById("menu");
+  m.style.display = m.style.display === "block" ? "none" : "block";
 }
+
+function mostrarVista(v){
+  document.getElementById("menu").style.display = "none";
+  const btnImprimir = document.getElementById("btnImprimir");
+  if(v === "devocional"){
+    document.getElementById("contenidoPrincipal").style.display = "block";
+    document.getElementById("envios").style.display = "none";
+    btnImprimir.style.display = "none";
+  } else {
+    document.getElementById("contenidoPrincipal").style.display = "none";
+    document.getElementById("envios").style.display = "block";
+    btnImprimir.style.display = "block";
+    cargarEnvios();
+  }
+}
+
+// ── INICIO ────────────────────────────────────────
+window.onload = function(){
+  const u = localStorage.getItem("usuario");
+  if(u){
+    usuario = u;
+    document.getElementById("login").style.display  = "none";
+    document.getElementById("app").style.display    = "block";
+    document.getElementById("tabs").style.display   = "flex";
+    document.getElementById("titulo").innerText     = "Usuario: " + usuario;
+    document.getElementById("versiculo").style.display = "block";
+    crearTabla();
+    cargarDatos();
+    controlarEnvio();
+    activarBotonSecreto();
+  }
+};
 
 function entrar(){
-usuario=document.getElementById("usuario").value.trim();
-
-if(usuario==""){
-alert("Escribe un usuario");
-return;
-}
-
-localStorage.setItem("usuario",usuario);
-
-document.getElementById("login").style.display="none";
-document.getElementById("app").style.display="block";
-document.getElementById("tabs").style.display="flex";
-
-document.getElementById("titulo").innerText="Usuario: "+usuario;
-document.getElementById("versiculo").style.display="block";
-
-crearTabla();
-controlarEnvio();
-activarBotonSecreto();
+  usuario = document.getElementById("usuario").value.trim();
+  if(usuario === ""){ alert("Escribe un usuario"); return; }
+  localStorage.setItem("usuario", usuario);
+  document.getElementById("login").style.display  = "none";
+  document.getElementById("app").style.display    = "block";
+  document.getElementById("tabs").style.display   = "flex";
+  document.getElementById("titulo").innerText     = "Usuario: " + usuario;
+  document.getElementById("versiculo").style.display = "block";
+  crearTabla();
+  controlarEnvio();
+  activarBotonSecreto();
 }
 
 function cambiarVista(tipo, el){
-vista=tipo;
-
-document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
-el.classList.add("active");
-
-if(tipo==="actual"){
-cargarDatos();
-bloquearEdicion(false);
-}else{
-cargarAnterior();
-bloquearEdicion(true);
-}
+  vista = tipo;
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  el.classList.add("active");
+  if(tipo === "actual"){ cargarDatos(); bloquearEdicion(false); }
+  else { cargarAnterior(); bloquearEdicion(true); }
 }
 
 function bloquearEdicion(estado){
-document.querySelectorAll("textarea").forEach(t=>{
-if(estado){
-t.classList.add("readonly");
-}else{
-t.classList.remove("readonly");
-}
-});
+  document.querySelectorAll("textarea, .oracion-input").forEach(t => {
+    estado ? t.classList.add("readonly") : t.classList.remove("readonly");
+  });
 }
 
-function cargarAnterior(){
-let datos=JSON.parse(localStorage.getItem("semanaAnterior"));
-if(!datos) return;
-
-dias.forEach(d=>{
-document.getElementById(d+"-lectura").value=datos[d]?.lectura||"";
-document.getElementById(d+"-oracion").value=datos[d]?.oracion||"";
-document.getElementById(d+"-dios").value=datos[d]?.dios||"";
-});
-
-document.getElementById("peticion").value=datos["peticion"]||"";
-}
-
+// ── TABLA ─────────────────────────────────────────
 function crearTabla(){
-let html="";
-dias.forEach(d=>{
-html+=`
-<tr>
-<td><span class="dia-badge">${d}</span></td>
-<td><textarea id="${d}-lectura"></textarea></td>
-<td><textarea id="${d}-oracion"></textarea></td>
-<td><textarea id="${d}-dios"></textarea></td>
-</tr>`;
-});
-document.getElementById("tabla").innerHTML=html;
+  let html = "";
+  dias.forEach(d => {
+    html += `<tr>
+      <td><span class="dia-badge">${d}</span></td>
+      <td><textarea id="${d}-lectura"></textarea></td>
+      <td>
+        <div class="oracion-wrap">
+          <input
+            class="oracion-input"
+            id="${d}-oracion"
+            type="text"
+            placeholder="ej: 30, 1:30, 1h30m"
+            oninput="validarOracion('${d}')"
+          >
+          <span class="oracion-hint">min · 1:30 · 1h30m · 1h</span>
+        </div>
+        <div class="oracion-preview" id="${d}-preview"></div>
+      </td>
+      <td><textarea id="${d}-dios"></textarea></td>
+    </tr>`;
+  });
+  document.getElementById("tabla").innerHTML = html;
 }
 
+function validarOracion(d){
+  const val = document.getElementById(d+"-oracion").value;
+  const prev = document.getElementById(d+"-preview");
+  if(!val.trim()){ prev.textContent = ""; prev.className = "oracion-preview"; return; }
+  const r = parsearTiempo(val);
+  if(r.ok){
+    prev.textContent = "✓ " + r.texto;
+    prev.className = "oracion-preview ok";
+  } else if(r.excede){
+    prev.textContent = "✗ Máximo 5 horas";
+    prev.className = "oracion-preview err";
+  } else {
+    prev.textContent = "✗ Formato no reconocido";
+    prev.className = "oracion-preview err";
+  }
+}
+
+// ── GUARDAR / CARGAR ──────────────────────────────
 function guardar(){
-let data={};
-
-dias.forEach(d=>{
-data[d]={
-lectura:document.getElementById(d+"-lectura").value,
-oracion:document.getElementById(d+"-oracion").value,
-dios:document.getElementById(d+"-dios").value
-}
-});
-
-data["peticion"]=document.getElementById("peticion").value;
-
-localStorage.setItem("datos",JSON.stringify(data));
-alert("Progreso guardado");
+  const data = {};
+  dias.forEach(d => {
+    data[d] = {
+      lectura: document.getElementById(d+"-lectura").value,
+      oracion: document.getElementById(d+"-oracion").value,
+      dios:    document.getElementById(d+"-dios").value
+    };
+  });
+  data["peticion"] = document.getElementById("peticion").value;
+  localStorage.setItem("datos", JSON.stringify(data));
+  alert("Progreso guardado");
 }
 
 function cargarDatos(){
-let datos=JSON.parse(localStorage.getItem("datos"));
-if(!datos) return;
+  const datos = JSON.parse(localStorage.getItem("datos"));
+  if(!datos) return;
+  dias.forEach(d => {
+    document.getElementById(d+"-lectura").value = datos[d]?.lectura || "";
+    document.getElementById(d+"-oracion").value = datos[d]?.oracion || "";
+    document.getElementById(d+"-dios").value    = datos[d]?.dios    || "";
+    validarOracion(d);
+  });
+  document.getElementById("peticion").value = datos["peticion"] || "";
+}
 
-dias.forEach(d=>{
-document.getElementById(d+"-lectura").value=datos[d]?.lectura||"";
-document.getElementById(d+"-oracion").value=datos[d]?.oracion||"";
-document.getElementById(d+"-dios").value=datos[d]?.dios||"";
-});
+function cargarAnterior(){
+  const datos = JSON.parse(localStorage.getItem("semanaAnterior"));
+  if(!datos) return;
+  dias.forEach(d => {
+    document.getElementById(d+"-lectura").value = datos[d]?.lectura || "";
+    document.getElementById(d+"-oracion").value = datos[d]?.oracion || "";
+    document.getElementById(d+"-dios").value    = datos[d]?.dios    || "";
+    validarOracion(d);
+  });
+  document.getElementById("peticion").value = datos["peticion"] || "";
+}
 
-document.getElementById("peticion").value=datos["peticion"]||"";
+// ── ENVIAR ────────────────────────────────────────
+function enviar(){
+  const b = document.querySelector(".enviar");
+  b.disabled  = true;
+  b.innerText = "Enviando…";
+  b.style.background = "gray";
+
+  let datos        = [];
+  let incompleto   = false;
+  let errorOracion = false;
+  let excedeTiempo = false;
+  const peticion   = document.getElementById("peticion").value;
+
+  const horaEnvio = new Date().toLocaleString("es-ES",{
+    day:"2-digit", month:"2-digit", year:"numeric",
+    hour:"2-digit", minute:"2-digit"
+  });
+
+  dias.forEach(d => {
+    const lectura   = document.getElementById(d+"-lectura").value.trim();
+    const oracionRaw = document.getElementById(d+"-oracion").value.trim();
+    const dios      = document.getElementById(d+"-dios").value.trim();
+
+    if(!lectura || !oracionRaw || !dios) incompleto = true;
+
+    const parsed = parsearTiempo(oracionRaw);
+    if(!parsed.ok && oracionRaw){
+      if(parsed.excede) excedeTiempo = true;
+      else errorOracion = true;
+    }
+
+    // Enviar el texto legible a Sheets
+    const oracionTexto = parsed.ok ? parsed.texto : oracionRaw;
+    datos.push({ usuario, dia:d, lectura, oracion:oracionTexto, dios, peticion, hora:horaEnvio });
+  });
+
+  if(incompleto){   alert("Llena todos los campos"); desbloquearBoton(); return; }
+  if(excedeTiempo){ alert("El tiempo de oración no puede exceder 5 horas"); desbloquearBoton(); return; }
+  if(errorOracion){ alert("Revisa el formato del tiempo de oración.\nEjemplos válidos: 30, 1:30, 1h30m, 45min"); desbloquearBoton(); return; }
+
+  const guardarObj = {};
+  dias.forEach(d => {
+    guardarObj[d] = {
+      lectura: document.getElementById(d+"-lectura").value,
+      oracion: document.getElementById(d+"-oracion").value,
+      dios:    document.getElementById(d+"-dios").value
+    };
+  });
+  guardarObj["peticion"] = peticion;
+  localStorage.setItem("semanaAnterior", JSON.stringify(guardarObj));
+
+  fetch(URL_POST, {
+    method:  "POST",
+    mode:    "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body:    JSON.stringify(datos)
+  })
+  .then(() => {
+    alert("Enviado correctamente");
+    localStorage.setItem("tiempoEnvio", Date.now());
+    bloquearBoton();
+    localStorage.removeItem("datos");
+  })
+  .catch(() => {
+    alert("Error de conexión");
+    desbloquearBoton();
+  });
 }
 
 function controlarEnvio(){
-let tiempoGuardado=localStorage.getItem("tiempoEnvio");
-
-if(tiempoGuardado){
-let diferencia=Date.now()-parseInt(tiempoGuardado);
-
-if(diferencia<60000){
-bloquearBoton();
-setTimeout(desbloquearBoton,60000-diferencia);
-}
-}
+  const t = localStorage.getItem("tiempoEnvio");
+  if(t){
+    const diff = Date.now() - parseInt(t);
+    if(diff < 60000){ bloquearBoton(); setTimeout(desbloquearBoton, 60000 - diff); }
+  }
 }
 
 function bloquearBoton(){
-let btn=document.querySelector(".enviar");
-btn.disabled=true;
-btn.innerText="Ya se ha enviado tu devocional";
-btn.style.background="gray";
+  const b = document.querySelector(".enviar");
+  b.disabled         = true;
+  b.innerText        = "Ya se ha enviado tu devocional";
+  b.style.background = "gray";
 }
 
 function desbloquearBoton(){
-let btn=document.querySelector(".enviar");
-btn.disabled=false;
-btn.innerText="Enviar";
-btn.style.background="linear-gradient(135deg,#1f6fb2,#0b3d91)";
-localStorage.removeItem("tiempoEnvio");
+  const b = document.querySelector(".enviar");
+  b.disabled         = false;
+  b.innerText        = "Enviar";
+  b.style.background = "linear-gradient(135deg,#1f6fb2,#0b3d91)";
+  localStorage.removeItem("tiempoEnvio");
 }
 
-function enviar(){
+// ── CARGAR ENVÍOS (JSONP) ─────────────────────────
+function cargarEnvios(){
+  document.getElementById("listaEnvios").innerHTML = "<p class='sin-datos'>Cargando…</p>";
 
-let btn=document.querySelector(".enviar");
-btn.disabled=true;
-btn.innerText="Enviando...";
-btn.style.background="gray";
+  if(window.__jsonpTimeout) clearTimeout(window.__jsonpTimeout);
+  const oldScript = document.getElementById("jsonp-script");
+  if(oldScript) oldScript.remove();
 
-let datos=[];
-let incompleto=false;
-let errorOracion=false;
+  const callbackName = "jsonpCallback_" + Date.now();
 
-let peticion=document.getElementById("peticion").value;
+  window[callbackName] = function(data){
+    clearTimeout(window.__jsonpTimeout);
+    document.getElementById("jsonp-script").remove();
+    delete window[callbackName];
 
-dias.forEach(d=>{
-let lectura=document.getElementById(d+"-lectura").value.trim();
-let oracion=document.getElementById(d+"-oracion").value.trim();
-let dios=document.getElementById(d+"-dios").value.trim();
+    if(!Array.isArray(data) || data.length === 0){
+      document.getElementById("listaEnvios").innerHTML = "<p class='sin-datos'>No hay envíos todavía</p>";
+      return;
+    }
 
-if(!lectura || !oracion || !dios) incompleto=true;
-if(!/^\d+$/.test(oracion)) errorOracion=true;
+    let html = "";
+    data.forEach(g => {
+      let fechaMostrar = g.fecha || "—";
+      if(fechaMostrar && fechaMostrar !== "—"){
+        const df = new Date(fechaMostrar);
+        if(!isNaN(df.getTime())){
+          const dd   = String(df.getDate()).padStart(2,"0");
+          const mm   = String(df.getMonth()+1).padStart(2,"0");
+          const yyyy = df.getFullYear();
+          const hh   = String(df.getHours()).padStart(2,"0");
+          const mn   = String(df.getMinutes()).padStart(2,"0");
+          fechaMostrar = `${dd}/${mm}/${yyyy} ${hh}:${mn}`;
+        }
+      }
 
-datos.push({usuario,dia:d,lectura,oracion,dios,peticion});
-});
+      const tiempoTxt = g.tiempo || "—";
 
-if(incompleto){
-alert("Llena todos los campos");
-desbloquearBoton();
-return;
+      const petTxt = g.peticion && g.peticion !== "-"
+        ? `<div class='peticion-txt'>🙏 ${escHtml(g.peticion)}</div>`
+        : "";
+
+      html += `
+        <div class='card-envio'>
+          <div class='cabecera'>
+            <span class='nombre'>👤 ${escHtml(g.usuario)}</span>
+            <span class='hora'>🕐 ${escHtml(fechaMostrar)}</span>
+          </div>
+          <div class='detalle'>
+            <span class='tag-oracion'>⏱ ${escHtml(tiempoTxt)}</span>
+          </div>
+          ${petTxt}
+        </div>`;
+    });
+
+    document.getElementById("listaEnvios").innerHTML = html;
+  };
+
+  window.__jsonpTimeout = setTimeout(() => {
+    const s = document.getElementById("jsonp-script");
+    if(s) s.remove();
+    if(window[callbackName]) delete window[callbackName];
+    document.getElementById("listaEnvios").innerHTML = "<p class='sin-datos'>Error al conectar con el servidor</p>";
+  }, 10000);
+
+  const script = document.createElement("script");
+  script.id  = "jsonp-script";
+  script.src = URL_GET + "?callback=" + callbackName;
+  document.body.appendChild(script);
 }
 
-if(errorOracion){
-alert("La oración debe ser contestada solo con números");
-desbloquearBoton();
-return;
+function escHtml(str){
+  return String(str)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
 }
 
-// guardar semana anterior
-let dataGuardar={};
-dias.forEach(d=>{
-dataGuardar[d]={
-lectura:document.getElementById(d+"-lectura").value,
-oracion:document.getElementById(d+"-oracion").value,
-dios:document.getElementById(d+"-dios").value
+// ── IMPRIMIR PETICIONES ───────────────────────────
+function imprimirPeticiones(){
+  const cards = document.querySelectorAll(".card-envio");
+  let contenido = `
+    <div style="font-family:sans-serif; padding:10px;">
+      <h2 style="color:#1f6fb2; margin-bottom:6px; font-size:20px;">
+        Peticiones de oración — Ministerio de Limpieza
+      </h2>
+      <p style="color:#888; font-size:13px; margin-top:0; margin-bottom:20px;">
+        Generado el ${new Date().toLocaleDateString("es-ES",{day:"2-digit",month:"2-digit",year:"numeric"})}
+      </p>
+  `;
+  let encontradas = 0;
+
+  cards.forEach(card => {
+    const peticionEl = card.querySelector(".peticion-txt");
+    const nombreEl  = card.querySelector(".nombre");
+    if(peticionEl && nombreEl){
+      const texto = peticionEl.innerText.replace("🙏 ", "").trim();
+      const textoLimpio = texto.replace(/[.\s\-_,;:!?]/g, "");
+      if(textoLimpio.length >= 3){
+        encontradas++;
+        contenido += `
+          <div style="
+            border-left:4px solid #1f6fb2;
+            padding:12px 16px;
+            margin-bottom:16px;
+            background:#f5f9ff;
+            border-radius:0 10px 10px 0;
+          ">
+            <div style="font-size:12px; color:#888; margin-bottom:6px; font-weight:600;">
+              ${nombreEl.innerText.replace("👤 ", "")}
+            </div>
+            <div style="font-size:15px; color:#1a2a44; line-height:1.5;">
+              ${texto}
+            </div>
+          </div>`;
+      }
+    }
+  });
+
+  contenido += "</div>";
+
+  if(encontradas === 0){
+    alert("No hay peticiones de oración registradas.");
+    return;
+  }
+
+  const area = document.getElementById("area-impresion");
+  area.innerHTML = contenido;
+  area.style.display = "block";
+  window.print();
+  area.style.display = "none";
 }
-});
-dataGuardar["peticion"]=peticion;
-localStorage.setItem("semanaAnterior",JSON.stringify(dataGuardar));
 
-// enviar
-fetch("https://script.google.com/macros/s/AKfycbyYwcuWOCdorgkWBybhxrZt2NwiGPr4A_6FAH1b2FGNOEbcxf5SXZgc7NffPRVH7hHdog/exec", {
-method:"POST",
-mode:"no-cors",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify(datos)
-})
-.then(()=>{
-alert("Enviado correctamente");
-
-localStorage.setItem("tiempoEnvio",Date.now());
-
-btn.disabled=true;
-btn.innerText="Ya se ha enviado tu devocional";
-btn.style.background="gray";
-
-localStorage.removeItem("datos");
-})
-.catch(()=>{
-alert("Error de conexión");
-desbloquearBoton();
-});
-
-}
-
+// ── BOTÓN SECRETO ─────────────────────────────────
 function activarBotonSecreto(){
-let titulo = document.getElementById("titulo");
-
-titulo.addEventListener("click", function(){
-
-contadorClicks++;
-
-if(contadorClicks === 5){
-
-if(confirm("¿Deseas cambiar de usuario?")){
-localStorage.removeItem("usuario");
-localStorage.removeItem("datos");
-location.reload();
-}
-
-contadorClicks = 0;
-}
-
-setTimeout(()=>{contadorClicks = 0;}, 1500);
-
-});
+  const t = document.getElementById("titulo");
+  t.addEventListener("click", () => {
+    contadorClicks++;
+    if(contadorClicks === 5){
+      if(confirm("¿Deseas cambiar de usuario?")){
+        localStorage.removeItem("usuario");
+        localStorage.removeItem("datos");
+        location.reload();
+      }
+      contadorClicks = 0;
+    }
+    setTimeout(() => { contadorClicks = 0; }, 1500);
+  });
 }
 
 </script>
-
 </body>
 </html>
