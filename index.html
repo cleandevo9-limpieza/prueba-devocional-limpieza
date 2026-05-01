@@ -171,7 +171,6 @@ font-size:10px;
 font-weight:600;
 }
 
-/* ── TEXTAREAS GENERALES ── */
 textarea{
 width:100%;
 background:#f5f9ff;
@@ -200,7 +199,6 @@ background:#f0f0f0;
 pointer-events:none;
 }
 
-/* ── CAMPO ORACIÓN ── */
 .oracion-input{
 width:100%;
 background:#f5f9ff;
@@ -217,7 +215,6 @@ transition:border 0.2s, background 0.2s, box-shadow 0.2s;
 min-height:80px;
 display:block;
 resize:none;
-/* input de una línea pero estilo textarea */
 }
 
 .oracion-input:focus{
@@ -243,7 +240,6 @@ background:#f0f0f0;
 pointer-events:none;
 }
 
-/* ── PETICIÓN ── */
 .peticion{
 margin-top:24px;
 background:white;
@@ -386,7 +382,6 @@ margin-bottom:12px;
 
 .btn-reload:hover{ background:#d9ecff; transform:none; box-shadow:none; }
 
-/* ── BOTÓN FLOTANTE ── */
 .btn-imprimir-flotante{
 position:fixed;
 bottom:24px;
@@ -424,7 +419,6 @@ body > *:not(#area-impresion){ display:none !important; }
 }
 }
 
-/* ── MÓVIL ── */
 @media(max-width:768px){
 .container{ padding:14px; margin:10px; border-radius:18px; }
 
@@ -589,7 +583,7 @@ function parsearTiempo(raw){
     } else { match = null; }
   }
 
-  // Solo número → minutos
+  // Solo número → minutos (incluye 0, 00, 000)
   if(!match){
     match = s.match(/^(\d+)$/);
     if(match){ h = 0; m = parseInt(match[1]); }
@@ -602,13 +596,14 @@ function parsearTiempo(raw){
   m  = m % 60;
 
   const total = h * 60 + m;
-  if(total <= 0)  return { ok:false };
+  if(total < 0)   return { ok:false };
   if(total > 300) return { ok:false, excede:true };
 
   let texto = "";
-  if(h > 0 && m > 0) texto = `${h} hora${h>1?"s":""} ${m} minuto${m>1?"s":""}`;
-  else if(h > 0)     texto = `${h} hora${h>1?"s":""}`;
-  else               texto = `${m} minuto${m>1?"s":""}`;
+  if(total === 0)          texto = "0 minutos";
+  else if(h > 0 && m > 0) texto = `${h} hora${h>1?"s":""} ${m} minuto${m>1?"s":""}`;
+  else if(h > 0)           texto = `${h} hora${h>1?"s":""}`;
+  else                     texto = `${m} minuto${m>1?"s":""}`;
 
   return { ok:true, texto };
 }
