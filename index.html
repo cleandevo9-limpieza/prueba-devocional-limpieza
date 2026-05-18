@@ -14,9 +14,9 @@ color:#1a2a44;
 }
 
 .container{
-max-width:1000px;
+max-width:1200px;
 margin:25px auto;
-padding:30px;
+padding:36px 40px;
 border-radius:22px;
 background:rgba(255,255,255,0.85);
 backdrop-filter:blur(15px);
@@ -148,7 +148,7 @@ border-radius:12px;
 padding:10px;
 color:#1a2a44;
 resize:none;
-height:80px;
+height:90px;
 font-size:14px;
 line-height:1.5;
 transition:border 0.2s, background 0.2s, box-shadow 0.2s;
@@ -181,7 +181,7 @@ font-family:inherit;
 box-sizing:border-box;
 outline:none;
 transition:border 0.2s, background 0.2s, box-shadow 0.2s;
-min-height:80px;
+min-height:90px;
 display:block;
 resize:none;
 }
@@ -193,9 +193,9 @@ box-shadow:0 0 0 3px rgba(77,163,255,0.15);
 }
 
 .oracion-input.valido{
-border:2px solid #1f9b5e !important;
-background:#f0faf5 !important;
-box-shadow:0 0 0 3px rgba(31,155,94,0.12) !important;
+border:2px solid #4da3ff !important;
+background:#eef5ff !important;
+box-shadow:0 0 0 3px rgba(77,163,255,0.12) !important;
 }
 
 .oracion-input.invalido{
@@ -211,13 +211,13 @@ pointer-events:none;
 
 /* ── FILA ENVIADA ── */
 tr.fila-enviada td{
-background:#f0faf5;
-box-shadow:0 6px 18px rgba(31,155,94,0.08);
+background:#eef5ff;
+box-shadow:0 6px 18px rgba(31,111,178,0.08);
 }
 
 tr.fila-enviada .dia-badge{
-background:#d4f5e7;
-color:#1f7a4a;
+background:#cce0ff;
+color:#1f5fa0;
 }
 
 .peticion{
@@ -330,6 +330,8 @@ box-shadow:0 0 0 3px rgba(31,155,94,0.12);
 }
 
 @media(max-width:768px){
+.container{ padding:14px; margin:10px; border-radius:18px; }
+
 .card-extra-header{ padding:12px 14px 0; }
 .card-extra textarea{
   margin:10px 12px 12px;
@@ -411,8 +413,9 @@ pointer-events:none;
 white-space:nowrap;
 }
 
+/* Todos los toasts en azul */
 .toast.toast-exito{
-background:linear-gradient(135deg,#1f9b5e,#0f6e40);
+background:linear-gradient(135deg,#1f6fb2,#0b3d91);
 }
 
 .toast.toast-error{
@@ -515,7 +518,7 @@ to{opacity:1;transform:translateY(0);}
             <div class="card-extra-sublabel">¿Qué estás leyendo esta semana?</div>
           </div>
         </div>
-        <textarea id="libro" placeholder="Escribe el libro, capítulo o tema que estás leyendo…"></textarea>
+        <textarea id="libro"></textarea>
       </div>
 
       <div class="card-extra card-extra-oracion">
@@ -850,7 +853,7 @@ function bloquearBoton(){
   const b = document.querySelector(".enviar");
   b.disabled         = true;
   b.innerText        = "✓ Devocional enviado";
-  b.style.background = "linear-gradient(135deg,#1f9b5e,#0f6e40)";
+  b.style.background = "linear-gradient(135deg,#1f6fb2,#0b3d91)";
 }
 
 function desbloquearBoton(){
