@@ -5,629 +5,281 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ministerio de Limpieza</title>
 <style>
-
-body{
-margin:0;
-font-family:-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-background:linear-gradient(135deg,#eaf2ff,#f8fbff);
-color:#1a2a44;
+:root{
+  --azul:#1f6fb2; --azul-dark:#0b3d91; --azul-light:#eef5ff;
+  --azul-mid:#4da3ff; --rojo:#c0392b; --rojo-dark:#922b21; --texto:#1a2a44;
 }
+*{ box-sizing:border-box; }
+body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif; background:linear-gradient(135deg,#eaf2ff,#f8fbff); color:var(--texto); }
 
-.container{
-max-width:1200px;
-margin:25px auto;
-padding:36px 40px;
-border-radius:22px;
-background:rgba(255,255,255,0.85);
-backdrop-filter:blur(15px);
-border:1px solid rgba(0,0,0,0.05);
-box-shadow:0 20px 40px rgba(0,0,0,0.08);
-animation:fadeIn 0.6s ease;
-}
 
-.tabs{
-display:flex;
-background:#eef5ff;
-border-radius:14px;
-padding:2px;
-gap:4px;
-margin-bottom:12px;
-}
 
-.tab{
-flex:1;
-text-align:center;
-padding:8px;
-border-radius:10px;
-font-size:12px;
-cursor:pointer;
-color:#1f6fb2;
-font-weight:500;
-}
+/* CONTAINER */
+.container{ max-width:680px;margin:25px auto;padding:24px 20px;border-radius:22px;background:rgba(255,255,255,.88);backdrop-filter:blur(15px);border:1px solid rgba(0,0,0,.05);box-shadow:0 20px 40px rgba(0,0,0,.08);animation:fadeIn .6s ease; }
 
-.tab.active{
-background:white;
-box-shadow:0 4px 10px rgba(0,0,0,0.05);
-}
+/* TABS */
+.tabs{ display:flex;background:var(--azul-light);border-radius:14px;padding:2px;gap:4px;margin-bottom:14px; }
+.tab{ flex:1;text-align:center;padding:9px;border-radius:10px;font-size:12px;cursor:pointer;color:var(--azul);font-weight:500; }
+.tab.active{ background:white;box-shadow:0 4px 10px rgba(0,0,0,.06); }
 
-.header{
-text-align:center;
-margin-bottom:30px;
-}
+/* HEADER */
+.header{ text-align:center;margin-bottom:22px; }
+.header h1{ font-size:24px;margin:0;font-weight:700;letter-spacing:-.5px;color:var(--azul); }
+.header h2{ margin-top:4px;font-size:13px;opacity:.6; }
 
-.header h1{
-font-size:28px;
-margin:0;
-font-weight:700;
-letter-spacing:-0.5px;
-color:#1f6fb2;
-}
+#titulo{ margin-top:16px; margin-bottom:28px; font-size:13px;font-weight:500;color:var(--azul);opacity:.8;text-align:center;cursor:pointer; }
 
-.header h2{
-margin-top:5px;
-font-size:14px;
-opacity:0.6;
-}
+.versiculo{ background:var(--azul-light);padding:12px;border-radius:12px;margin-top:12px;font-style:italic;font-size:12px;display:none; }
+.referencia{ font-size:11px;opacity:.7;margin-top:3px; }
 
-#titulo{
-margin-top:15px;
-font-size:14px;
-font-weight:500;
-color:#1f6fb2;
-opacity:0.8;
-text-align:center;
-cursor:pointer;
-}
+/* TABLA — cada día es una fila de campos en columna */
+.tabla-wrap{ display:flex;flex-direction:column;gap:8px;margin-top:10px; }
 
-.versiculo{
-background:#eef5ff;
-padding:14px;
-border-radius:14px;
-margin-top:15px;
-font-style:italic;
-font-size:13px;
-display:none;
+.fila-dia{
+  background:white;border-radius:14px;
+  box-shadow:0 3px 12px rgba(0,0,0,.06);
+  padding:10px 12px;
+  display:grid;
+  grid-template-columns: 38px 1fr 115px 0.8fr;
+  gap:6px;
+  align-items:start;
+  transition:background .3s;
 }
-
-.referencia{
-font-size:12px;
-opacity:0.7;
-margin-top:5px;
-}
-
-.tabla-container{
-width:100%;
-overflow-x:auto;
-}
-
-table{
-width:100%;
-margin-top:15px;
-border-collapse:separate;
-border-spacing:5px 10px;
-}
-
-th{
-font-size:11px;
-opacity:0.6;
-font-weight:600;
-padding-bottom:6px;
-}
-
-td{
-padding:8px 10px;
-vertical-align:top;
-background:white;
-border-radius:16px;
-box-shadow:0 6px 18px rgba(0,0,0,0.06);
-transition:background 0.4s, box-shadow 0.4s;
-}
-
-td:first-child{
-width:44px;
-min-width:44px;
-text-align:center;
-padding:8px 4px;
-}
+.fila-dia.fila-enviada{ background:var(--azul-light); }
 
 .dia-badge{
-display:inline-block;
-padding:5px 6px;
-border-radius:10px;
-background:#eef5ff;
-color:#1f6fb2;
-font-size:10px;
-font-weight:600;
+  display:flex;align-items:center;justify-content:center;
+  height:100%;min-height:36px;
+  background:var(--azul-light);color:var(--azul);
+  font-size:10px;font-weight:700;border-radius:8px;
+  padding:4px 2px;
 }
+.fila-enviada .dia-badge{ background:#cce0ff;color:#1f5fa0; }
 
-textarea{
-width:100%;
-background:#f5f9ff;
-border:2px solid transparent;
-border-radius:12px;
-padding:10px;
-color:#1a2a44;
-resize:none;
-height:90px;
-font-size:14px;
-line-height:1.5;
-transition:border 0.2s, background 0.2s, box-shadow 0.2s;
-box-sizing:border-box;
-font-family:inherit;
+.col-label{ font-size:9px;font-weight:700;color:var(--azul);opacity:.6;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px; }
+
+.campo-wrap{ display:flex;flex-direction:column; }
+
+.tabla-input{
+  width:100%;background:#f5f9ff;border:2px solid transparent;border-radius:10px;
+  padding:8px 9px;color:var(--texto);resize:none;height:72px;font-size:13px;
+  line-height:1.5;transition:border .2s,background .2s,box-shadow .2s;font-family:inherit;
 }
+.tabla-input:focus{ outline:none;border:2px solid var(--azul-mid);background:white;box-shadow:0 0 0 3px rgba(77,163,255,.15); }
+.tabla-input.readonly{ background:#f0f0f0;pointer-events:none; }
 
-textarea:focus{
-outline:none;
-border:2px solid #4da3ff;
-background:white;
-box-shadow:0 0 0 3px rgba(77,163,255,0.15);
-}
-
-textarea.readonly{
-background:#f0f0f0;
-pointer-events:none;
-}
-
+/* Columna oración: chips + campo */
+.oracion-wrap{ display:flex;flex-direction:column;gap:4px; }
+.oracion-chips{ display:flex;gap:3px;flex-wrap:wrap; }
 .oracion-input{
-width:100%;
-background:#f5f9ff;
-border:2px solid transparent;
-border-radius:12px;
-padding:10px;
-color:#1a2a44;
-font-size:14px;
-line-height:1.5;
-font-family:inherit;
-box-sizing:border-box;
-outline:none;
-transition:border 0.2s, background 0.2s, box-shadow 0.2s;
-min-height:90px;
-display:block;
-resize:none;
+  width:100%;background:#f5f9ff;border:2px solid transparent;border-radius:10px;
+  padding:8px 9px;color:var(--texto);font-size:13px;font-family:inherit;
+  outline:none;transition:border .2s,background .2s,box-shadow .2s;
+  resize:none;height:72px;display:block;
 }
+.oracion-input:focus{ border:2px solid var(--azul-mid);background:white;box-shadow:0 0 0 3px rgba(77,163,255,.15); }
+.oracion-input.enfocado-valido{ border:2px solid #1f9b5e!important;background:#f0faf5!important;box-shadow:0 0 0 3px rgba(31,155,94,.12)!important; }
+.oracion-input.invalido{ border:2px solid var(--rojo)!important;background:#fff5f5!important;box-shadow:0 0 0 3px rgba(192,57,43,.12)!important; }
+.oracion-input.readonly{ background:#f0f0f0;pointer-events:none; }
 
-.oracion-input:focus{
-border:2px solid #4da3ff;
-background:white;
-box-shadow:0 0 0 3px rgba(77,163,255,0.15);
-}
-
-.oracion-input.valido{
-border:2px solid #4da3ff !important;
-background:#eef5ff !important;
-box-shadow:0 0 0 3px rgba(77,163,255,0.12) !important;
-}
-
-.oracion-input.invalido{
-border:2px solid #c0392b !important;
-background:#fff5f5 !important;
-box-shadow:0 0 0 3px rgba(192,57,43,0.12) !important;
-}
-
-.oracion-input.readonly{
-background:#f0f0f0;
-pointer-events:none;
-}
-
-/* ── FILA ENVIADA ── */
-tr.fila-enviada td{
-background:#eef5ff;
-box-shadow:0 6px 18px rgba(31,111,178,0.08);
-}
-
-tr.fila-enviada .dia-badge{
-background:#cce0ff;
-color:#1f5fa0;
-}
-
-.peticion{
-margin-top:24px;
-background:white;
-padding:16px;
-border-radius:16px;
-box-shadow:0 10px 20px rgba(0,0,0,0.05);
-}
-
-.peticion textarea{
-height:100px;
-}
-
-/* ── SECCIÓN EXTRA: LIBRO + PETICIÓN ── */
-.seccion-extra{
-margin-top:20px;
-display:flex;
-flex-direction:column;
-gap:16px;
-}
-
-.card-extra{
-background:white;
-border-radius:20px;
-box-shadow:0 10px 30px rgba(0,0,0,0.07);
-overflow:hidden;
-transition:box-shadow 0.3s;
-}
-
-.card-extra:hover{
-box-shadow:0 14px 36px rgba(0,0,0,0.11);
-}
-
-.card-extra-header{
-display:flex;
-align-items:center;
-gap:10px;
-padding:14px 18px 0;
-}
-
-.card-extra-icon{
-width:36px;
-height:36px;
-border-radius:10px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:18px;
-flex-shrink:0;
-}
-
-.card-extra-icon.libro{
-background:linear-gradient(135deg,#e8f4ff,#cce5ff);
-}
-
-.card-extra-icon.oracion{
-background:linear-gradient(135deg,#e8f6ef,#c3ecda);
-}
-
-.card-extra-label{
-font-size:13px;
-font-weight:700;
-color:#1a2a44;
-letter-spacing:0.2px;
-}
-
-.card-extra-sublabel{
-font-size:11px;
-color:#8fa3bf;
-margin-top:1px;
-}
-
+/* EXTRA */
+.seccion-extra{ margin-top:14px;display:flex;flex-direction:column;gap:12px; }
+.card-extra{ background:white;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,.06);overflow:hidden; }
+.card-extra-header{ display:flex;align-items:center;gap:9px;padding:12px 14px 0; }
+.card-extra-icon{ width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0; }
+.card-extra-icon.libro{ background:linear-gradient(135deg,#e8f4ff,#cce5ff); }
+.card-extra-icon.oracion{ background:linear-gradient(135deg,#e8f6ef,#c3ecda); }
+.card-extra-label{ font-size:13px;font-weight:700;color:var(--texto); }
+.card-extra-sublabel{ font-size:11px;color:#8fa3bf;margin-top:1px; }
 .card-extra textarea{
-margin:10px 14px 14px;
-width:calc(100% - 28px);
-height:90px;
-background:#f7faff;
-border:2px solid transparent;
-border-radius:12px;
-padding:10px 12px;
-color:#1a2a44;
-resize:none;
-font-size:14px;
-line-height:1.6;
-transition:border 0.2s, background 0.2s, box-shadow 0.2s;
-box-sizing:border-box;
-font-family:inherit;
+  margin:8px 12px 12px;width:calc(100% - 24px);height:80px;
+  background:#f7faff;border:2px solid transparent;border-radius:10px;
+  padding:8px 10px;color:var(--texto);resize:none;font-size:13px;line-height:1.6;
+  transition:border .2s,background .2s,box-shadow .2s;font-family:inherit;
 }
+.card-extra textarea:focus{ outline:none;border:2px solid var(--azul-mid);background:white;box-shadow:0 0 0 3px rgba(77,163,255,.15); }
+.card-extra textarea.readonly{ background:#f0f0f0;pointer-events:none; }
+.card-extra-oracion textarea{ height:90px; }
 
-.card-extra textarea:focus{
-outline:none;
-border:2px solid #4da3ff;
-background:white;
-box-shadow:0 0 0 3px rgba(77,163,255,0.15);
-}
+/* BOTONES */
+.botones{ display:flex;gap:10px;margin-top:18px; }
+button{ flex:1;padding:14px;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;transition:.25s;color:white; }
+.guardar{ background:linear-gradient(135deg,var(--azul-mid),var(--azul)); }
+.enviar{ background:linear-gradient(135deg,var(--azul),var(--azul-dark)); }
+button:hover{ transform:translateY(-2px);box-shadow:0 10px 20px rgba(0,0,0,.14); }
 
-.card-extra textarea.readonly{
-background:#f0f0f0;
-pointer-events:none;
-}
+/* LOGIN */
+.login{ text-align:center;padding:28px 10px; }
+.login input{ padding:11px;border:1px solid rgba(0,0,0,.1);border-radius:12px;background:white;text-align:center;width:80%;max-width:240px;font-size:15px; }
+.login button{ margin-top:10px;padding:12px 24px;background:linear-gradient(135deg,var(--azul),var(--azul-dark));color:white; }
 
-.card-extra-oracion textarea{
-height:110px;
-}
 
-.card-extra-oracion textarea:focus{
-border:2px solid #1f9b5e;
-box-shadow:0 0 0 3px rgba(31,155,94,0.12);
-}
 
-@media(max-width:768px){
-.container{ padding:14px; margin:10px; border-radius:18px; }
-
-.card-extra-header{ padding:12px 14px 0; }
-.card-extra textarea{
-  margin:10px 12px 12px;
-  width:calc(100% - 24px);
-  height:100px;
-  font-size:15px;
-}
-.card-extra-oracion textarea{ height:120px; }
-}
-
-.botones{
-display:flex;
-gap:12px;
-margin-top:22px;
-}
-
-button{
-flex:1;
-padding:16px;
-border:none;
-border-radius:14px;
-font-size:15px;
-font-weight:600;
-cursor:pointer;
-transition:0.25s;
-color:white;
-}
-
-.guardar{ background:linear-gradient(135deg,#4da3ff,#1f6fb2); }
-.enviar{  background:linear-gradient(135deg,#1f6fb2,#0b3d91); }
-
-button:hover{
-transform:translateY(-2px);
-box-shadow:0 10px 20px rgba(0,0,0,0.15);
-}
-
-.login{
-text-align:center;
-padding:30px 10px;
-}
-
-.login input{
-padding:12px;
-border:1px solid rgba(0,0,0,0.1);
-border-radius:12px;
-background:white;
-text-align:center;
-width:80%;
-max-width:250px;
-font-size:15px;
-}
-
-.login button{
-margin-top:10px;
-padding:12px 25px;
-background:linear-gradient(135deg,#1f6fb2,#0b3d91);
-color:white;
-}
+/* TOAST */
+.toast{ position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--texto);color:white;padding:11px 22px;border-radius:50px;font-size:14px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.18);opacity:0;transition:opacity .3s,transform .3s;z-index:9999;pointer-events:none;white-space:nowrap; }
+.toast.toast-exito{ background:linear-gradient(135deg,var(--azul),var(--azul-dark)); }
+.toast.toast-error{ background:linear-gradient(135deg,var(--rojo),var(--rojo-dark)); }
+.toast.visible{ opacity:1;transform:translateX(-50%) translateY(0); }
 
 #area-impresion{ display:none; }
-
-/* ── TOAST ── */
-.toast{
-position:fixed;
-bottom:30px;
-left:50%;
-transform:translateX(-50%) translateY(20px);
-background:#1a2a44;
-color:white;
-padding:12px 22px;
-border-radius:50px;
-font-size:14px;
-font-weight:500;
-box-shadow:0 8px 24px rgba(0,0,0,0.18);
-opacity:0;
-transition:opacity 0.3s, transform 0.3s;
-z-index:9999;
-pointer-events:none;
-white-space:nowrap;
+@media print{
+  body>*:not(#area-impresion){ display:none!important; }
+  #area-impresion{ display:block!important;position:static;width:100%;padding:0; }
 }
 
-/* Todos los toasts en azul */
-.toast.toast-exito{
-background:linear-gradient(135deg,#1f6fb2,#0b3d91);
+@media(max-width:480px){
+  .container{ padding:14px 10px;margin:8px;border-radius:16px; }
+  .fila-dia{ grid-template-columns:34px 1fr 82px 1fr; gap:5px; padding:8px 10px; }
+  .tabla-input{ height:68px;font-size:13px; }
+  .header h1{ font-size:20px; }
+  button{ padding:13px;font-size:13px; }
 }
 
-.toast.toast-error{
-background:linear-gradient(135deg,#c0392b,#922b21);
-}
-
-.toast.visible{
-opacity:1;
-transform:translateX(-50%) translateY(0);
-}
-
-@media(max-width:768px){
-.container{ padding:14px; margin:10px; border-radius:18px; }
-
-table{ border-spacing:4px 10px; }
-
-td{ padding:8px 10px; border-radius:14px; }
-td:first-child{ width:38px; min-width:38px; }
-
-.dia-badge{ font-size:10px; padding:5px 6px; }
-
-textarea{
-  height:100px;
-  font-size:15px;
-  padding:10px;
-}
-
-.oracion-input{
-  min-height:100px;
-  font-size:15px;
-  padding:10px;
-}
-
-th{ font-size:11px; }
-
-.header h1{ font-size:22px; }
-.header h2{ font-size:13px; }
-
-.botones{ gap:10px; }
-button{ padding:14px; font-size:14px; }
-
-.toast{ font-size:13px; padding:10px 18px; }
-}
-
-@keyframes fadeIn{
-from{opacity:0;transform:translateY(20px);}
-to{opacity:1;transform:translateY(0);}
-}
+@keyframes fadeIn{ from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);} }
 
 </style>
 </head>
 <body>
 
+
 <div class="container">
+  <div id="contenidoPrincipal">
 
-  <div class="tabs" id="tabs" style="display:none;">
-    <div class="tab active" onclick="cambiarVista('actual', this)">Semana actual</div>
-    <div class="tab" onclick="cambiarVista('anterior', this)">Semana anterior</div>
-  </div>
-
-  <div class="header">
-    <h1>Ministerio de Limpieza</h1>
-    <h2>Registro Devocional Semanal</h2>
-    <div id="versiculo" class="versiculo">
-      "Porque Dios no es injusto para olvidar vuestra obra…"
-      <div class="referencia">Hebreos 6:10 RV 1960</div>
-    </div>
-  </div>
-
-  <div id="login" class="login">
-    <h3>Ingresar Usuario</h3>
-    <input id="usuario" placeholder="Escribe tu usuario">
-    <br>
-    <button onclick="entrar()">Entrar</button>
-  </div>
-
-  <div id="app" style="display:none;">
-
-    <h3 id="titulo"></h3>
-
-    <div class="tabla-container">
-      <table>
-        <tr>
-          <th>Día</th>
-          <th>Lectura</th>
-          <th>Oración</th>
-          <th>Lo que Dios me habló</th>
-        </tr>
-        <tbody id="tabla"></tbody>
-      </table>
+    <div class="tabs" id="tabs" style="display:none;">
+      <div class="tab active" onclick="cambiarVista('actual',this)">Semana actual</div>
+      <div class="tab" onclick="cambiarVista('anterior',this)">Semana anterior</div>
     </div>
 
-    <div class="seccion-extra">
+    <div class="header">
+      <h1>Ministerio de Limpieza</h1>
+      <h2>Registro Devocional Semanal</h2>
+      <div id="versiculo" class="versiculo">
+        "Porque Dios no es injusto para olvidar vuestra obra…"
+        <div class="referencia">Hebreos 6:10 RV 1960</div>
+      </div>
+    </div>
 
-      <div class="card-extra">
-        <div class="card-extra-header">
-          <div class="card-extra-icon libro">📚</div>
-          <div>
-            <div class="card-extra-label">Lectura de libro</div>
-            <div class="card-extra-sublabel">¿Qué estás leyendo esta semana?</div>
-          </div>
-        </div>
-        <textarea id="libro"></textarea>
+    <div id="login" class="login">
+      <h3>Ingresar Usuario</h3>
+      <input id="usuario" placeholder="Escribe tu usuario">
+      <br>
+      <button onclick="entrar()">Entrar</button>
+    </div>
+
+    <div id="app" style="display:none;">
+      <h3 id="titulo"></h3>
+
+      <!-- Encabezados de columna -->
+      <div style="display:grid;grid-template-columns:38px 1fr 115px 0.8fr;gap:6px;padding:0 12px;margin-top:10px;">
+        <div></div>
+        <div class="col-label" style="font-size:9px;font-weight:700;color:var(--azul);opacity:.6;text-transform:uppercase;letter-spacing:.4px;">Lectura (Biblia)</div>
+        <div class="col-label" style="font-size:9px;font-weight:700;color:var(--azul);opacity:.6;text-transform:uppercase;letter-spacing:.4px;">Oración</div>
+        <div class="col-label" style="font-size:9px;font-weight:700;color:var(--azul);opacity:.6;text-transform:uppercase;letter-spacing:.4px;">Lo que Dios me habló</div>
       </div>
 
-      <div class="card-extra card-extra-oracion">
-        <div class="card-extra-header">
-          <div class="card-extra-icon oracion">🙏</div>
-          <div>
-            <div class="card-extra-label">Petición de oración</div>
-            <div class="card-extra-sublabel">Comparte tu petición semanal</div>
+      <div class="tabla-wrap" id="tabla"></div>
+
+      <div class="seccion-extra">
+        <div class="card-extra">
+          <div class="card-extra-header">
+            <div class="card-extra-icon libro"></div>
+            <div>
+              <div class="card-extra-label">Lectura de libro</div>
+              <div class="card-extra-sublabel">¿Qué estás leyendo esta semana?</div>
+            </div>
           </div>
+          <textarea id="libro"></textarea>
         </div>
-        <textarea id="peticion" placeholder="Escribe tu petición de oración…"></textarea>
+        <div class="card-extra card-extra-oracion">
+          <div class="card-extra-header">
+            <div class="card-extra-icon oracion"></div>
+            <div>
+              <div class="card-extra-label">Petición de oración</div>
+              <div class="card-extra-sublabel">Comparte tu petición semanal</div>
+            </div>
+          </div>
+          <textarea id="peticion" placeholder="Escribe tu petición de oración…"></textarea>
+        </div>
       </div>
 
+      <div class="botones">
+        <button class="guardar" onclick="guardar()">Guardar</button>
+        <button class="enviar" onclick="enviar()">Enviar</button>
+      </div>
     </div>
-
-    <div class="botones">
-      <button class="guardar" onclick="guardar()">Guardar</button>
-      <button class="enviar"  onclick="enviar()">Enviar</button>
-    </div>
-
   </div>
 
 </div>
-
 <div id="area-impresion"></div>
 <div class="toast" id="toast"></div>
 
 <script>
-
 const URL_POST = "https://script.google.com/macros/s/AKfycbyph6Mwmlkx_Io2OIrTecuezGm-ITGAvyHBsps9yG-IIoMfNWW3ys6N4tHlXJdSAQ4WNQ/exec";
+const URL_GET  = "https://script.google.com/macros/s/AKfycbyph6Mwmlkx_Io2OIrTecuezGm-ITGAvyHBsps9yG-IIoMfNWW3ys6N4tHlXJdSAQ4WNQ/exec";
 
 const dias = ["Lun","Mar","Mié","Jue","Vie","Sáb"];
-let usuario = "";
-let contadorClicks = 0;
-let vista = "actual";
-let toastTimer = null;
+const diasCompletos = {Lun:"Lunes",Mar:"Martes","Mié":"Miércoles",Jue:"Jueves",Vie:"Viernes","Sáb":"Sábado"};
+const NIVELES = ["1 hr","1:30 hr","2 hr","Más"];
+const NIVELES_MIN = [60, 90, 120, 121];
 
-// ── TOAST ─────────────────────────────────────────
-function mostrarToast(msg, tipo = ""){
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.className = "toast" + (tipo ? " toast-" + tipo : "");
-  void t.offsetWidth;
-  t.classList.add("visible");
-  if(toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { t.classList.remove("visible"); }, 3000);
+let usuario="", contadorClicks=0, vista="actual", toastTimer=null;
+
+
+// ── TOAST
+function mostrarToast(msg,tipo=""){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.className="toast"+(tipo?" toast-"+tipo:"");
+  void t.offsetWidth; t.classList.add("visible");
+  if(toastTimer)clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove("visible"),3000);
 }
 
-// ── PARSEAR TIEMPO ────────────────────────────────
+// ── PARSEAR TIEMPO
 function parsearTiempo(raw){
-  let s = raw.trim().toLowerCase();
-  if(!s) return { ok:false };
+  if(!raw||!raw.trim()) return {ok:false};
 
-  s = s
-    .replace(/horas?/g,   "h")
-    .replace(/minutos?/g, "m")
-    .replace(/mins?/g,    "m")
-    .replace(/hrs?/g,     "h");
-
-  s = s.replace(/(\d)\s+([hm])/g, "$1$2");
-  s = s.replace(/([hm])\s+(\d)/g, "$1$2");
-
-  let h = 0, m = 0;
-  let match;
-
-  match = s.match(/^(\d+):(\d{1,2})$/);
-  if(match){ h = parseInt(match[1]); m = parseInt(match[2]); }
-
-  if(!match){
-    match = s.match(/^(?:(\d+)h)?(?:(\d+)m)?$/);
-    if(match && (match[1] || match[2])){
-      h = match[1] ? parseInt(match[1]) : 0;
-      m = match[2] ? parseInt(match[2]) : 0;
-    } else { match = null; }
+  const idx=NIVELES.findIndex(n=>n===raw.trim());
+  if(idx>=0){
+    const mins=[60,90,120,999];
+    const textos=["1 hora","1 hora 30 minutos","2 horas","Más de 2 horas"];
+    return {ok:true,texto:textos[idx],total:mins[idx],esChip:true};
   }
-
+  let s=raw.trim().toLowerCase();
+  s=s.replace(/horas?/g,"h").replace(/minutos?/g,"m").replace(/mins?/g,"m").replace(/hrs?/g,"h");
+  s=s.replace(/(\d)\s+([hm])/g,"$1$2").replace(/([hm])\s+(\d)/g,"$1$2");
+  let h=0,m=0,match;
+  match=s.match(/^(\d+):(\d{1,2})$/);
+  if(match){h=parseInt(match[1]);m=parseInt(match[2]);}
   if(!match){
-    match = s.match(/^(\d+)$/);
-    if(match){ h = 0; m = parseInt(match[1]); }
+    match=s.match(/^(?:(\d+)h)?(?:(\d+)m)?$/);
+    if(match&&(match[1]||match[2])){h=match[1]?parseInt(match[1]):0;m=match[2]?parseInt(match[2]):0;}
+    else match=null;
   }
-
-  if(!match) return { ok:false };
-
-  h += Math.floor(m / 60);
-  m  = m % 60;
-
-  const total = h * 60 + m;
-  if(total < 0)   return { ok:false };
-  if(total > 300) return { ok:false, excede:true };
-
-  let texto = "";
-  if(total === 0)          texto = "0 minutos";
-  else if(h > 0 && m > 0) texto = `${h} hora${h>1?"s":""} ${m} minuto${m>1?"s":""}`;
-  else if(h > 0)           texto = `${h} hora${h>1?"s":""}`;
-  else                     texto = `${m} minuto${m>1?"s":""}`;
-
-  return { ok:true, texto };
+  if(!match){match=s.match(/^(\d+)$/);if(match){h=0;m=parseInt(match[1]);}}
+  if(!match) return {ok:false};
+  h+=Math.floor(m/60);m=m%60;
+  const total=h*60+m;
+  if(total>300) return {ok:false,excede:true};
+  let texto="";
+  if(total===0) texto="0 minutos";
+  else if(h>0&&m>0) texto=`${h} hora${h>1?"s":""} ${m} minuto${m>1?"s":""}`;
+  else if(h>0) texto=`${h} hora${h>1?"s":""}`;
+  else texto=`${m} minuto${m>1?"s":""}`;
+  return {ok:true,texto,total};
 }
 
-// ── INICIO ────────────────────────────────────────
-window.onload = function(){
-  const u = localStorage.getItem("usuario");
+
+
+// ── INICIO
+window.onload=function(){
+  const u=localStorage.getItem("usuario");
   if(u){
-    usuario = u;
-    document.getElementById("login").style.display  = "none";
-    document.getElementById("app").style.display    = "block";
-    document.getElementById("tabs").style.display   = "flex";
-    document.getElementById("titulo").innerText     = "Usuario: " + usuario;
-    document.getElementById("versiculo").style.display = "block";
+    usuario=u;
+    document.getElementById("login").style.display="none";
+    document.getElementById("app").style.display="block";
+    document.getElementById("tabs").style.display="flex";
+    document.getElementById("titulo").innerText="Usuario: "+usuario;
+    document.getElementById("versiculo").style.display="block";
     crearTabla();
     cargarDatos();
     controlarEnvio();
@@ -636,251 +288,226 @@ window.onload = function(){
 };
 
 function entrar(){
-  usuario = document.getElementById("usuario").value.trim();
-  if(!usuario){ mostrarToast("Escribe un usuario", "error"); return; }
-  localStorage.setItem("usuario", usuario);
-  document.getElementById("login").style.display  = "none";
-  document.getElementById("app").style.display    = "block";
-  document.getElementById("tabs").style.display   = "flex";
-  document.getElementById("titulo").innerText     = "Usuario: " + usuario;
-  document.getElementById("versiculo").style.display = "block";
+  usuario=document.getElementById("usuario").value.trim();
+  if(!usuario){mostrarToast("Escribe un usuario","error");return;}
+  localStorage.setItem("usuario",usuario);
+  document.getElementById("login").style.display="none";
+  document.getElementById("app").style.display="block";
+  document.getElementById("tabs").style.display="flex";
+  document.getElementById("titulo").innerText="Usuario: "+usuario;
+  document.getElementById("versiculo").style.display="block";
   crearTabla();
   controlarEnvio();
   activarBotonSecreto();
 }
 
-function cambiarVista(tipo, el){
-  vista = tipo;
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+function cambiarVista(tipo,el){
+  vista=tipo;
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   el.classList.add("active");
-  if(tipo === "actual"){ cargarDatos(); bloquearEdicion(false); }
-  else { cargarAnterior(); bloquearEdicion(true); }
+  if(tipo==="actual"){cargarDatos();bloquearEdicion(false);}
+  else{cargarAnterior();bloquearEdicion(true);}
 }
 
 function bloquearEdicion(estado){
-  document.querySelectorAll("textarea, .oracion-input").forEach(t => {
-    estado ? t.classList.add("readonly") : t.classList.remove("readonly");
+  document.querySelectorAll(".tabla-input,.oracion-input,.card-extra textarea").forEach(t=>{
+    estado?t.classList.add("readonly"):t.classList.remove("readonly");
   });
 }
 
-// ── TABLA ─────────────────────────────────────────
+// ── CREAR TABLA
 function crearTabla(){
-  let html = "";
-  dias.forEach(d => {
-    html += `<tr id="fila-${d}">
-      <td><span class="dia-badge">${d}</span></td>
-      <td><textarea id="${d}-lectura"></textarea></td>
-      <td>
-        <textarea
-          class="oracion-input"
-          id="${d}-oracion"
+  let html="";
+  dias.forEach(d=>{
+    html+=`
+    <div class="fila-dia" id="fila-${d}">
+      <div class="dia-badge">${d}</div>
+      <div class="campo-wrap">
+        <textarea class="tabla-input" id="${d}-lectura"></textarea>
+      </div>
+      <div class="campo-wrap">
+        <textarea class="oracion-input" id="${d}-oracion"
           oninput="validarOracion('${d}')"
-        ></textarea>
-      </td>
-      <td><textarea id="${d}-dios"></textarea></td>
-    </tr>`;
+          onfocus="validarOracion('${d}', true)"
+          onblur="alQuitarFoco('${d}')"></textarea>
+      </div>
+      <div class="campo-wrap">
+        <textarea class="tabla-input" id="${d}-dios"></textarea>
+      </div>
+    </div>`;
   });
-  document.getElementById("tabla").innerHTML = html;
+  document.getElementById("tabla").innerHTML=html;
 }
 
-function validarOracion(d){
-  const el  = document.getElementById(d+"-oracion");
-  const val = el.value;
-  if(!val.trim()){
-    el.classList.remove("valido","invalido");
+function pareceIntento(val){
+  const s = val.trim().toLowerCase();
+  if(/[hm:]/.test(s)) return true;
+  if(/^\d{1,3}$/.test(s)) return true;
+  return false;
+}
+
+function validarOracion(d, conFoco){
+  const el=document.getElementById(d+"-oracion");
+  const val=el.value.trim();
+  if(!val){ el.classList.remove("enfocado-valido","invalido"); return; }
+
+  if(!pareceIntento(val)){
+    el.classList.remove("enfocado-valido","invalido");
     return;
   }
-  const r = parsearTiempo(val);
-  if(r.ok){
-    el.classList.add("valido");
+
+  const r=parsearTiempo(val);
+  if(r && r.ok){
     el.classList.remove("invalido");
+    if(conFoco || document.activeElement === el){
+      el.classList.add("enfocado-valido");
+    }
   } else {
     el.classList.add("invalido");
-    el.classList.remove("valido");
+    el.classList.remove("enfocado-valido");
   }
 }
 
-// ── MARCAR FILAS COMO ENVIADAS ────────────────────
+function alQuitarFoco(d){
+  const el=document.getElementById(d+"-oracion");
+  el.classList.remove("enfocado-valido");
+  const val=el.value.trim();
+  if(val && pareceIntento(val)){
+    const r=parsearTiempo(val);
+    if(!r || !r.ok){ el.classList.add("invalido"); }
+    else { el.classList.remove("invalido"); }
+  } else {
+    el.classList.remove("invalido");
+  }
+}
+
+// ── MARCAR ENVIADAS
 function marcarFilasEnviadas(){
-  dias.forEach(d => {
-    const fila = document.getElementById("fila-" + d);
-    if(fila) fila.classList.add("fila-enviada");
-  });
+  dias.forEach(d=>{const f=document.getElementById("fila-"+d);if(f)f.classList.add("fila-enviada");});
 }
-
 function desmarcarFilas(){
-  dias.forEach(d => {
-    const fila = document.getElementById("fila-" + d);
-    if(fila) fila.classList.remove("fila-enviada");
-  });
+  dias.forEach(d=>{const f=document.getElementById("fila-"+d);if(f)f.classList.remove("fila-enviada");});
 }
 
-// ── GUARDAR / CARGAR ──────────────────────────────
+// ── GUARDAR / CARGAR
 function guardar(){
-  const data = {};
-  dias.forEach(d => {
-    data[d] = {
-      lectura: document.getElementById(d+"-lectura").value,
-      oracion: document.getElementById(d+"-oracion").value,
-      dios:    document.getElementById(d+"-dios").value
+  const data={};
+  dias.forEach(d=>{
+    data[d]={
+      lectura:document.getElementById(d+"-lectura").value,
+      oracion:document.getElementById(d+"-oracion").value,
+      dios:document.getElementById(d+"-dios").value
     };
   });
-  data["peticion"] = document.getElementById("peticion").value;
-  data["libro"]    = document.getElementById("libro").value;
-  localStorage.setItem("datos", JSON.stringify(data));
-  mostrarToast("✓ Progreso guardado", "exito");
+  data.peticion=document.getElementById("peticion").value;
+  data.libro=document.getElementById("libro").value;
+  localStorage.setItem("datos",JSON.stringify(data));
+  mostrarToast("✓ Progreso guardado","exito");
 }
 
 function cargarDatos(){
-  const datos = JSON.parse(localStorage.getItem("datos"));
-  if(!datos) return;
-  dias.forEach(d => {
-    document.getElementById(d+"-lectura").value = datos[d]?.lectura || "";
-    document.getElementById(d+"-oracion").value = datos[d]?.oracion || "";
-    document.getElementById(d+"-dios").value    = datos[d]?.dios    || "";
-    validarOracion(d);
+  const datos=JSON.parse(localStorage.getItem("datos"));
+  if(!datos)return;
+  dias.forEach(d=>{
+    document.getElementById(d+"-lectura").value=datos[d]?.lectura||"";
+    document.getElementById(d+"-dios").value=datos[d]?.dios||"";
+    document.getElementById(d+"-oracion").value=datos[d]?.oracion||"";
   });
-  document.getElementById("peticion").value = datos["peticion"] || "";
-  document.getElementById("libro").value    = datos["libro"]    || "";
+  document.getElementById("peticion").value=datos.peticion||"";
+  document.getElementById("libro").value=datos.libro||"";
 }
 
 function cargarAnterior(){
-  const datos = JSON.parse(localStorage.getItem("semanaAnterior"));
-  if(!datos) return;
-  dias.forEach(d => {
-    document.getElementById(d+"-lectura").value = datos[d]?.lectura || "";
-    document.getElementById(d+"-oracion").value = datos[d]?.oracion || "";
-    document.getElementById(d+"-dios").value    = datos[d]?.dios    || "";
-    validarOracion(d);
+  const datos=JSON.parse(localStorage.getItem("semanaAnterior"));
+  if(!datos)return;
+  dias.forEach(d=>{
+    document.getElementById(d+"-lectura").value=datos[d]?.lectura||"";
+    document.getElementById(d+"-dios").value=datos[d]?.dios||"";
+    document.getElementById(d+"-oracion").value=datos[d]?.oracion||"";
   });
-  document.getElementById("peticion").value = datos["peticion"] || "";
-  document.getElementById("libro").value    = datos["libro"]    || "";
+  document.getElementById("peticion").value=datos.peticion||"";
+  document.getElementById("libro").value=datos.libro||"";
 }
 
-// ── ENVIAR ────────────────────────────────────────
+// ── ENVIAR
 function enviar(){
-  const b = document.querySelector(".enviar");
-  b.disabled = true;
-  b.innerText = "Enviando…";
-  b.style.background = "gray";
+  const b=document.querySelector(".enviar");
+  b.disabled=true;b.innerText="Enviando…";b.style.background="gray";
 
-  let datos = [];
-  let incompleto = false;
-  let errorOracion = false;
-  let excedeTiempo = false;
-  const peticion = document.getElementById("peticion").value;
-  const libro    = document.getElementById("libro").value;
+  let datos=[],incompleto=false;
+  const peticion=document.getElementById("peticion").value;
+  const libro=document.getElementById("libro").value;
+  const horaEnvio=new Date().toLocaleString("es-ES",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});
 
-  const horaEnvio = new Date().toLocaleString("es-ES",{
-    day:"2-digit", month:"2-digit", year:"numeric",
-    hour:"2-digit", minute:"2-digit"
+  dias.forEach(d=>{
+    const lectura=document.getElementById(d+"-lectura").value.trim();
+    const oracion=document.getElementById(d+"-oracion").value.trim();
+    const dios=document.getElementById(d+"-dios").value.trim();
+    if(!lectura||!oracion||!dios) incompleto=true;
+    datos.push({usuario,dia:d,lectura,oracion,dios,libro,peticion,hora:horaEnvio});
   });
 
-  dias.forEach(d => {
-    const lectura    = document.getElementById(d+"-lectura").value.trim();
-    const oracionRaw = document.getElementById(d+"-oracion").value.trim();
-    const dios       = document.getElementById(d+"-dios").value.trim();
+  if(incompleto){mostrarToast("⚠️ Llena todos los campos","error");desbloquearBoton();return;}
 
-    if(!lectura || !oracionRaw || !dios) incompleto = true;
-
-    const parsed = parsearTiempo(oracionRaw);
-    if(oracionRaw && !parsed.ok){
-      if(parsed.excede) excedeTiempo = true;
-      else errorOracion = true;
-    }
-
-    const oracionTexto = parsed.ok ? parsed.texto : oracionRaw;
-    datos.push({ usuario, dia:d, lectura, oracion:oracionTexto, dios, libro, peticion, hora:horaEnvio });
-  });
-
-  if(incompleto){
-    mostrarToast("⚠️ Llena todos los campos", "error");
-    desbloquearBoton(); return;
-  }
-  if(excedeTiempo){
-    mostrarToast("⚠️ El tiempo no puede exceder 5 horas", "error");
-    desbloquearBoton(); return;
-  }
-  if(errorOracion){
-    mostrarToast("⚠️ Revisa el tiempo de oración", "error");
-    desbloquearBoton(); return;
-  }
-
-  const guardarObj = {};
-  dias.forEach(d => {
-    guardarObj[d] = {
-      lectura: document.getElementById(d+"-lectura").value,
-      oracion: document.getElementById(d+"-oracion").value,
-      dios:    document.getElementById(d+"-dios").value
+  const guardarObj={};
+  dias.forEach(d=>{
+    guardarObj[d]={
+      lectura:document.getElementById(d+"-lectura").value,
+      oracion:document.getElementById(d+"-oracion").value,
+      dios:document.getElementById(d+"-dios").value
     };
   });
-  guardarObj["peticion"] = peticion;
-  guardarObj["libro"]    = libro;
-  localStorage.setItem("semanaAnterior", JSON.stringify(guardarObj));
+  guardarObj.peticion=peticion; guardarObj.libro=libro;
+  localStorage.setItem("semanaAnterior",JSON.stringify(guardarObj));
 
-  fetch(URL_POST, {
-    method:  "POST",
-    mode:    "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body:    JSON.stringify(datos)
-  })
-  .then(() => {
-    mostrarToast("✓ Devocional enviado correctamente", "exito");
-    localStorage.setItem("tiempoEnvio", Date.now());
-    bloquearBoton();
-    marcarFilasEnviadas();
+  fetch(URL_POST,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(datos)})
+  .then(()=>{
+    mostrarToast("✓ Devocional enviado correctamente","exito");
+    localStorage.setItem("tiempoEnvio",Date.now());
+    bloquearBoton(); marcarFilasEnviadas();
     localStorage.removeItem("datos");
   })
-  .catch(() => {
-    mostrarToast("✗ Error de conexión, intenta de nuevo", "error");
-    desbloquearBoton();
-  });
+  .catch(()=>{mostrarToast("✗ Error de conexión, intenta de nuevo","error");desbloquearBoton();});
 }
 
 function controlarEnvio(){
-  const t = localStorage.getItem("tiempoEnvio");
+  const t=localStorage.getItem("tiempoEnvio");
   if(t){
-    const diff = Date.now() - parseInt(t);
-    if(diff < 60000){
-      bloquearBoton();
-      marcarFilasEnviadas();
-      setTimeout(() => { desbloquearBoton(); desmarcarFilas(); }, 60000 - diff);
+    const diff=Date.now()-parseInt(t);
+    if(diff<60000){
+      bloquearBoton(); marcarFilasEnviadas();
+      setTimeout(()=>{desbloquearBoton();desmarcarFilas();},60000-diff);
     }
   }
 }
-
 function bloquearBoton(){
-  const b = document.querySelector(".enviar");
-  b.disabled         = true;
-  b.innerText        = "✓ Devocional enviado";
-  b.style.background = "linear-gradient(135deg,#1f6fb2,#0b3d91)";
+  const b=document.querySelector(".enviar");
+  b.disabled=true;b.innerText="✓ Devocional enviado";
+  b.style.background="linear-gradient(135deg,#1f6fb2,#0b3d91)";
 }
-
 function desbloquearBoton(){
-  const b = document.querySelector(".enviar");
-  b.disabled         = false;
-  b.innerText        = "Enviar";
-  b.style.background = "linear-gradient(135deg,#1f6fb2,#0b3d91)";
+  const b=document.querySelector(".enviar");
+  b.disabled=false;b.innerText="Enviar";
+  b.style.background="linear-gradient(135deg,#1f6fb2,#0b3d91)";
   localStorage.removeItem("tiempoEnvio");
 }
 
-// ── BOTÓN SECRETO ─────────────────────────────────
+
+
+// ── BOTÓN SECRETO
 function activarBotonSecreto(){
-  const t = document.getElementById("titulo");
-  t.addEventListener("click", () => {
+  const t=document.getElementById("titulo");
+  t.addEventListener("click",()=>{
     contadorClicks++;
-    if(contadorClicks === 5){
+    if(contadorClicks===5){
       if(confirm("¿Deseas cambiar de usuario?")){
-        localStorage.removeItem("usuario");
-        localStorage.removeItem("datos");
-        location.reload();
+        localStorage.removeItem("usuario");localStorage.removeItem("datos");location.reload();
       }
-      contadorClicks = 0;
+      contadorClicks=0;
     }
-    setTimeout(() => { contadorClicks = 0; }, 1500);
+    setTimeout(()=>{contadorClicks=0;},1500);
   });
 }
-
 </script>
 </body>
 </html>
