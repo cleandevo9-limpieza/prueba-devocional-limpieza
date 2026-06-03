@@ -261,8 +261,29 @@ function cambiarVista(tipo,el){
   vista=tipo;
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   el.classList.add("active");
+  limpiarCampos();
   if(tipo==="actual"){cargarDatos();bloquearEdicion(false);}
   else{cargarAnterior();bloquearEdicion(true);}
+}
+
+function limpiarCampos(){
+  dias.forEach(d=>{
+    document.getElementById(d+"-lectura").value="";
+    document.getElementById(d+"-oracion").value="";
+    document.getElementById(d+"-dios").value="";
+  });
+  document.getElementById("peticion").value="";
+  document.getElementById("libro").value="";
+}
+
+function limpiarCampos(){
+  dias.forEach(d=>{
+    document.getElementById(d+"-lectura").value="";
+    document.getElementById(d+"-oracion").value="";
+    document.getElementById(d+"-dios").value="";
+  });
+  document.getElementById("peticion").value="";
+  document.getElementById("libro").value="";
 }
 
 function bloquearEdicion(estado){
