@@ -12,27 +12,21 @@
 *{ box-sizing:border-box; }
 body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif; background:linear-gradient(135deg,#eaf2ff,#f8fbff); color:var(--texto); }
 
-
-
-/* CONTAINER */
 .container{ max-width:680px;margin:25px auto;padding:24px 20px;border-radius:22px;background:rgba(255,255,255,.88);backdrop-filter:blur(15px);border:1px solid rgba(0,0,0,.05);box-shadow:0 20px 40px rgba(0,0,0,.08);animation:fadeIn .6s ease; }
 
-/* TABS */
 .tabs{ display:flex;background:var(--azul-light);border-radius:14px;padding:2px;gap:4px;margin-bottom:14px; }
 .tab{ flex:1;text-align:center;padding:9px;border-radius:10px;font-size:12px;cursor:pointer;color:var(--azul);font-weight:500; }
 .tab.active{ background:white;box-shadow:0 4px 10px rgba(0,0,0,.06); }
 
-/* HEADER */
 .header{ text-align:center;margin-bottom:22px; }
 .header h1{ font-size:24px;margin:0;font-weight:700;letter-spacing:-.5px;color:var(--azul); }
 .header h2{ margin-top:4px;font-size:13px;opacity:.6; }
 
-#titulo{ margin-top:16px; margin-bottom:28px; font-size:13px;font-weight:500;color:var(--azul);opacity:.8;text-align:center;cursor:pointer; }
+#titulo{ margin-top:12px;margin-bottom:18px;font-size:13px;font-weight:500;color:var(--azul);opacity:.8;text-align:center;cursor:pointer; }
 
 .versiculo{ background:var(--azul-light);padding:12px;border-radius:12px;margin-top:12px;font-style:italic;font-size:12px;display:none; }
 .referencia{ font-size:11px;opacity:.7;margin-top:3px; }
 
-/* TABLA — cada día es una fila de campos en columna */
 .tabla-wrap{ display:flex;flex-direction:column;gap:8px;margin-top:10px; }
 
 .fila-dia{
@@ -68,7 +62,6 @@ body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sa
 .tabla-input:focus{ outline:none;border:2px solid var(--azul-mid);background:white;box-shadow:0 0 0 3px rgba(77,163,255,.15); }
 .tabla-input.readonly{ background:#f0f0f0;pointer-events:none; }
 
-/* Columna oración: chips + campo */
 .oracion-wrap{ display:flex;flex-direction:column;gap:4px; }
 .oracion-chips{ display:flex;gap:3px;flex-wrap:wrap; }
 .oracion-input{
@@ -82,7 +75,6 @@ body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sa
 .oracion-input.invalido{ border:2px solid var(--rojo)!important;background:#fff5f5!important;box-shadow:0 0 0 3px rgba(192,57,43,.12)!important; }
 .oracion-input.readonly{ background:#f0f0f0;pointer-events:none; }
 
-/* EXTRA */
 .seccion-extra{ margin-top:14px;display:flex;flex-direction:column;gap:12px; }
 .card-extra{ background:white;border-radius:16px;box-shadow:0 6px 20px rgba(0,0,0,.06);overflow:hidden; }
 .card-extra-header{ display:flex;align-items:center;gap:9px;padding:12px 14px 0; }
@@ -101,131 +93,106 @@ body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sa
 .card-extra textarea.readonly{ background:#f0f0f0;pointer-events:none; }
 .card-extra-oracion textarea{ height:90px; }
 
-/* BOTONES */
 .botones{ display:flex;gap:10px;margin-top:18px; }
 button{ flex:1;padding:14px;border:none;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer;transition:.25s;color:white; }
 .guardar{ background:linear-gradient(135deg,var(--azul-mid),var(--azul)); }
 .enviar{ background:linear-gradient(135deg,var(--azul),var(--azul-dark)); }
 button:hover{ transform:translateY(-2px);box-shadow:0 10px 20px rgba(0,0,0,.14); }
 
-/* LOGIN */
 .login{ text-align:center;padding:28px 10px; }
 .login input{ padding:11px;border:1px solid rgba(0,0,0,.1);border-radius:12px;background:white;text-align:center;width:80%;max-width:240px;font-size:15px; }
 .login button{ margin-top:10px;padding:12px 24px;background:linear-gradient(135deg,var(--azul),var(--azul-dark));color:white; }
 
-
-
-/* TOAST */
 .toast{ position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--texto);color:white;padding:11px 22px;border-radius:50px;font-size:14px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.18);opacity:0;transition:opacity .3s,transform .3s;z-index:9999;pointer-events:none;white-space:nowrap; }
 .toast.toast-exito{ background:linear-gradient(135deg,var(--azul),var(--azul-dark)); }
 .toast.toast-error{ background:linear-gradient(135deg,var(--rojo),var(--rojo-dark)); }
 .toast.visible{ opacity:1;transform:translateX(-50%) translateY(0); }
 
-#area-impresion{ display:none; }
-@media print{
-  body>*:not(#area-impresion){ display:none!important; }
-  #area-impresion{ display:block!important;position:static;width:100%;padding:0; }
-}
-
 @media(max-width:480px){
   .container{ padding:14px 10px;margin:8px;border-radius:16px; }
-  .fila-dia{ grid-template-columns:34px 1fr 82px 1fr; gap:5px; padding:8px 10px; }
+  .fila-dia{ grid-template-columns:34px 1fr 82px 1fr;gap:5px;padding:8px 10px; }
   .tabla-input{ height:68px;font-size:13px; }
   .header h1{ font-size:20px; }
   button{ padding:13px;font-size:13px; }
 }
 
 @keyframes fadeIn{ from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);} }
-
 </style>
 </head>
 <body>
 
-
 <div class="container">
-  <div id="contenidoPrincipal">
+  <div class="tabs" id="tabs" style="display:none;">
+    <div class="tab active" onclick="cambiarVista('actual',this)">Semana actual</div>
+    <div class="tab" onclick="cambiarVista('anterior',this)">Semana anterior</div>
+  </div>
 
-    <div class="tabs" id="tabs" style="display:none;">
-      <div class="tab active" onclick="cambiarVista('actual',this)">Semana actual</div>
-      <div class="tab" onclick="cambiarVista('anterior',this)">Semana anterior</div>
-    </div>
-
-    <div class="header">
-      <h1>Ministerio de Limpieza</h1>
-      <h2>Registro Devocional Semanal</h2>
-      <div id="versiculo" class="versiculo">
-        "Porque Dios no es injusto para olvidar vuestra obra…"
-        <div class="referencia">Hebreos 6:10 RV 1960</div>
-      </div>
-    </div>
-
-    <div id="login" class="login">
-      <h3>Ingresar Usuario</h3>
-      <input id="usuario" placeholder="Escribe tu usuario">
-      <br>
-      <button onclick="entrar()">Entrar</button>
-    </div>
-
-    <div id="app" style="display:none;">
-      <h3 id="titulo"></h3>
-
-      <!-- Encabezados de columna -->
-      <div style="display:grid;grid-template-columns:38px 1fr 115px 0.8fr;gap:6px;padding:0 12px;margin-top:10px;">
-        <div></div>
-        <div class="col-label" style="font-size:9px;font-weight:700;color:var(--azul);opacity:.6;text-transform:uppercase;letter-spacing:.4px;">Lectura (Biblia)</div>
-        <div class="col-label" style="font-size:9px;font-weight:700;color:var(--azul);opacity:.6;text-transform:uppercase;letter-spacing:.4px;">Oración</div>
-        <div class="col-label" style="font-size:9px;font-weight:700;color:var(--azul);opacity:.6;text-transform:uppercase;letter-spacing:.4px;">Lo que Dios me habló</div>
-      </div>
-
-      <div class="tabla-wrap" id="tabla"></div>
-
-      <div class="seccion-extra">
-        <div class="card-extra">
-          <div class="card-extra-header">
-            <div class="card-extra-icon libro"></div>
-            <div>
-              <div class="card-extra-label">Lectura de libro</div>
-              <div class="card-extra-sublabel">¿Qué estás leyendo esta semana?</div>
-            </div>
-          </div>
-          <textarea id="libro"></textarea>
-        </div>
-        <div class="card-extra card-extra-oracion">
-          <div class="card-extra-header">
-            <div class="card-extra-icon oracion"></div>
-            <div>
-              <div class="card-extra-label">Petición de oración</div>
-              <div class="card-extra-sublabel">Comparte tu petición semanal</div>
-            </div>
-          </div>
-          <textarea id="peticion" placeholder="Escribe tu petición de oración…"></textarea>
-        </div>
-      </div>
-
-      <div class="botones">
-        <button class="guardar" onclick="guardar()">Guardar</button>
-        <button class="enviar" onclick="enviar()">Enviar</button>
-      </div>
+  <div class="header">
+    <h1>Ministerio de Limpieza</h1>
+    <h2>Registro Devocional Semanal</h2>
+    <div id="versiculo" class="versiculo">
+      "Porque Dios no es injusto para olvidar vuestra obra…"
+      <div class="referencia">Hebreos 6:10 RV 1960</div>
     </div>
   </div>
 
+  <div id="login" class="login">
+    <h3>Ingresar Usuario</h3>
+    <input id="usuario" placeholder="Escribe tu usuario">
+    <br>
+    <button onclick="entrar()">Entrar</button>
+  </div>
+
+  <div id="app" style="display:none;">
+    <h3 id="titulo"></h3>
+
+    <div style="display:grid;grid-template-columns:38px 1fr 115px 0.8fr;gap:6px;padding:0 12px;margin-top:10px;">
+      <div></div>
+      <div class="col-label">Lectura (Biblia)</div>
+      <div class="col-label">Oración</div>
+      <div class="col-label">Lo que Dios me habló</div>
+    </div>
+
+    <div class="tabla-wrap" id="tabla"></div>
+
+    <div class="seccion-extra">
+      <div class="card-extra">
+        <div class="card-extra-header">
+          <div class="card-extra-icon libro"></div>
+          <div>
+            <div class="card-extra-label">Lectura de libro</div>
+            <div class="card-extra-sublabel">¿Qué estás leyendo esta semana?</div>
+          </div>
+        </div>
+        <textarea id="libro"></textarea>
+      </div>
+      <div class="card-extra card-extra-oracion">
+        <div class="card-extra-header">
+          <div class="card-extra-icon oracion"></div>
+          <div>
+            <div class="card-extra-label">Petición de oración</div>
+            <div class="card-extra-sublabel">Comparte tu petición semanal</div>
+          </div>
+        </div>
+        <textarea id="peticion" placeholder="Escribe tu petición de oración…"></textarea>
+      </div>
+    </div>
+
+    <div class="botones">
+      <button class="guardar" onclick="guardar()">Guardar</button>
+      <button class="enviar" onclick="enviar()">Enviar</button>
+    </div>
+  </div>
 </div>
-<div id="area-impresion"></div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-const URL_POST = "https://script.google.com/macros/s/AKfycbyph6Mwmlkx_Io2OIrTecuezGm-ITGAvyHBsps9yG-IIoMfNWW3ys6N4tHlXJdSAQ4WNQ/exec";
-const URL_GET  = "https://script.google.com/macros/s/AKfycbyph6Mwmlkx_Io2OIrTecuezGm-ITGAvyHBsps9yG-IIoMfNWW3ys6N4tHlXJdSAQ4WNQ/exec";
+const URL_POST = "https://script.google.com/macros/s/AKfycby1eckHu7WB3JsyJqQf4638IkW_bPUTpmANZEXvKY0HvfAEiF7RkSAITZ3ZKD6WScj5wg/exec";
 
 const dias = ["Lun","Mar","Mié","Jue","Vie","Sáb"];
-const diasCompletos = {Lun:"Lunes",Mar:"Martes","Mié":"Miércoles",Jue:"Jueves",Vie:"Viernes","Sáb":"Sábado"};
-const NIVELES = ["1 hr","1:30 hr","2 hr","Más"];
-const NIVELES_MIN = [60, 90, 120, 121];
-
 let usuario="", contadorClicks=0, vista="actual", toastTimer=null;
 
-
-// ── TOAST
 function mostrarToast(msg,tipo=""){
   const t=document.getElementById("toast");
   t.textContent=msg; t.className="toast"+(tipo?" toast-"+tipo:"");
@@ -234,16 +201,8 @@ function mostrarToast(msg,tipo=""){
   toastTimer=setTimeout(()=>t.classList.remove("visible"),3000);
 }
 
-// ── PARSEAR TIEMPO
 function parsearTiempo(raw){
   if(!raw||!raw.trim()) return {ok:false};
-
-  const idx=NIVELES.findIndex(n=>n===raw.trim());
-  if(idx>=0){
-    const mins=[60,90,120,999];
-    const textos=["1 hora","1 hora 30 minutos","2 horas","Más de 2 horas"];
-    return {ok:true,texto:textos[idx],total:mins[idx],esChip:true};
-  }
   let s=raw.trim().toLowerCase();
   s=s.replace(/horas?/g,"h").replace(/minutos?/g,"m").replace(/mins?/g,"m").replace(/hrs?/g,"h");
   s=s.replace(/(\d)\s+([hm])/g,"$1$2").replace(/([hm])\s+(\d)/g,"$1$2");
@@ -268,9 +227,6 @@ function parsearTiempo(raw){
   return {ok:true,texto,total};
 }
 
-
-
-// ── INICIO
 window.onload=function(){
   const u=localStorage.getItem("usuario");
   if(u){
@@ -315,7 +271,6 @@ function bloquearEdicion(estado){
   });
 }
 
-// ── CREAR TABLA
 function crearTabla(){
   let html="";
   dias.forEach(d=>{
@@ -340,28 +295,21 @@ function crearTabla(){
 }
 
 function pareceIntento(val){
-  const s = val.trim().toLowerCase();
+  const s=val.trim().toLowerCase();
   if(/[hm:]/.test(s)) return true;
   if(/^\d{1,3}$/.test(s)) return true;
   return false;
 }
 
-function validarOracion(d, conFoco){
+function validarOracion(d,conFoco){
   const el=document.getElementById(d+"-oracion");
   const val=el.value.trim();
-  if(!val){ el.classList.remove("enfocado-valido","invalido"); return; }
-
-  if(!pareceIntento(val)){
-    el.classList.remove("enfocado-valido","invalido");
-    return;
-  }
-
+  if(!val){el.classList.remove("enfocado-valido","invalido");return;}
+  if(!pareceIntento(val)){el.classList.remove("enfocado-valido","invalido");return;}
   const r=parsearTiempo(val);
-  if(r && r.ok){
+  if(r&&r.ok){
     el.classList.remove("invalido");
-    if(conFoco || document.activeElement === el){
-      el.classList.add("enfocado-valido");
-    }
+    if(conFoco||document.activeElement===el) el.classList.add("enfocado-valido");
   } else {
     el.classList.add("invalido");
     el.classList.remove("enfocado-valido");
@@ -372,16 +320,15 @@ function alQuitarFoco(d){
   const el=document.getElementById(d+"-oracion");
   el.classList.remove("enfocado-valido");
   const val=el.value.trim();
-  if(val && pareceIntento(val)){
+  if(val&&pareceIntento(val)){
     const r=parsearTiempo(val);
-    if(!r || !r.ok){ el.classList.add("invalido"); }
-    else { el.classList.remove("invalido"); }
+    if(!r||!r.ok) el.classList.add("invalido");
+    else el.classList.remove("invalido");
   } else {
     el.classList.remove("invalido");
   }
 }
 
-// ── MARCAR ENVIADAS
 function marcarFilasEnviadas(){
   dias.forEach(d=>{const f=document.getElementById("fila-"+d);if(f)f.classList.add("fila-enviada");});
 }
@@ -389,7 +336,6 @@ function desmarcarFilas(){
   dias.forEach(d=>{const f=document.getElementById("fila-"+d);if(f)f.classList.remove("fila-enviada");});
 }
 
-// ── GUARDAR / CARGAR
 function guardar(){
   const data={};
   dias.forEach(d=>{
@@ -429,7 +375,6 @@ function cargarAnterior(){
   document.getElementById("libro").value=datos.libro||"";
 }
 
-// ── ENVIAR
 function enviar(){
   const b=document.querySelector(".enviar");
   b.disabled=true;b.innerText="Enviando…";b.style.background="gray";
@@ -457,14 +402,14 @@ function enviar(){
       dios:document.getElementById(d+"-dios").value
     };
   });
-  guardarObj.peticion=peticion; guardarObj.libro=libro;
+  guardarObj.peticion=peticion;guardarObj.libro=libro;
   localStorage.setItem("semanaAnterior",JSON.stringify(guardarObj));
 
   fetch(URL_POST,{method:"POST",mode:"no-cors",headers:{"Content-Type":"application/json"},body:JSON.stringify(datos)})
   .then(()=>{
     mostrarToast("✓ Devocional enviado correctamente","exito");
     localStorage.setItem("tiempoEnvio",Date.now());
-    bloquearBoton(); marcarFilasEnviadas();
+    bloquearBoton();marcarFilasEnviadas();
     localStorage.removeItem("datos");
   })
   .catch(()=>{mostrarToast("✗ Error de conexión, intenta de nuevo","error");desbloquearBoton();});
@@ -475,16 +420,18 @@ function controlarEnvio(){
   if(t){
     const diff=Date.now()-parseInt(t);
     if(diff<60000){
-      bloquearBoton(); marcarFilasEnviadas();
+      bloquearBoton();marcarFilasEnviadas();
       setTimeout(()=>{desbloquearBoton();desmarcarFilas();},60000-diff);
     }
   }
 }
+
 function bloquearBoton(){
   const b=document.querySelector(".enviar");
   b.disabled=true;b.innerText="✓ Devocional enviado";
   b.style.background="linear-gradient(135deg,#1f6fb2,#0b3d91)";
 }
+
 function desbloquearBoton(){
   const b=document.querySelector(".enviar");
   b.disabled=false;b.innerText="Enviar";
@@ -492,9 +439,6 @@ function desbloquearBoton(){
   localStorage.removeItem("tiempoEnvio");
 }
 
-
-
-// ── BOTÓN SECRETO
 function activarBotonSecreto(){
   const t=document.getElementById("titulo");
   t.addEventListener("click",()=>{
